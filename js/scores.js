@@ -22,7 +22,7 @@ async function loadScores() {
     h += "</tr></thead><tbody>";
     s.forEach(function (x) {
       var d = dirClass(x.direction);
-      h += "<tr><td><b>" + esc(x.pair) + '</b><div class="tl ' + d + '">' + esc(x.label) + "</div></td>";
+      h += '<tr><td><a href="pair.html?p=' + esc(x.pair) + '"><b>' + esc(x.pair) + '</b></a><div class="tl ' + d + '">' + esc(x.label) + "</div></td>";
       h += '<td class="' + d + '"><b>' + fmtScore(x.score) + "</b></td>";
       SIGS.forEach(function (n) {
         var v = m[x.pair] ? m[x.pair][n[0]] : null;
@@ -32,6 +32,7 @@ async function loadScores() {
       h += "</tr>";
     });
     h += "</tbody></table></div>";
+    h += '<p class="note">Tap a pair name to open its detail page.</p>';
     h += '<p class="note">Each signal runs from -2 (bearish) to +2 (bullish). n/a means no data.</p>';
     h += '<p class="note">Sales = Retail Sales (economic data). Retail = retail trader positioning, read as a contrarian signal.</p>';
     h += '<p class="note">The headline score uses only Mom, Rates, GDP, Sales, CPI and UE. COT, Retail and Season are shown for context.</p>';
@@ -39,4 +40,4 @@ async function loadScores() {
   } catch (e) {
     app.textContent = "Could not load scores: " + e.message;
   }
-                   }
+}
