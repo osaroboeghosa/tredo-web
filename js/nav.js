@@ -2,10 +2,10 @@
   var PAGES = [
     ["Dashboard", "index.html", true],
     ["Scores", "scores.html", true],
-    ["Sentiment", "sentiment.html", false],
-    ["COT", "cot.html", false],
+    ["Sentiment", "sentiment.html", true],
+    ["COT", "cot.html", true],
     ["Central Banks", "central-banks.html", true],
-    ["Seasonality", "seasonality.html", false],
+    ["Seasonality", "seasonality.html", true],
     ["Alerts", "alerts.html", false],
     ["Tools", "tools.html", false],
     ["What's New", "whats-new.html", false],
