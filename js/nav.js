@@ -8,8 +8,8 @@
     ["Seasonality", "seasonality.html", true],
     ["Alerts", "alerts.html", false],
     ["Tools", "tools.html", false],
-    ["What's New", "whats-new.html", false],
-    ["Upgrade", "upgrade.html", false]
+    ["What's New", "whats-new.html", true],
+    ["Upgrade", "upgrade.html", true]
   ];
   var here = location.pathname.split("/").pop() || "index.html";
   var items = PAGES.map(function (p) {
