@@ -11,6 +11,8 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS s
 - sentiment.html: Sentiment page, retail long/short per pair (page and script in one file).
 - cot.html: COT page, latest net positioning per currency (page and script in one file).
 - seasonality.html: Seasonality page, current month 2Y and 5Y averages per pair (page and script in one file).
+- whats-new.html: What's New page, change log.
+- upgrade.html: Upgrade placeholder, no payments yet.
 - css/tokens.css: colour, font and radius tokens (dark theme, teal accent).
 - css/app.css: shared layout, menu, card, badge and strength strip styles.
 - css/scores.css: table styles, also used by Sentiment, COT and Seasonality.
