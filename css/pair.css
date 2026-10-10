@@ -1,0 +1,8 @@
+.srow { margin-bottom: 8px; padding: 10px 14px; }
+.sn { font-size: 15px; }
+.sv { font-size: 20px; }
+.rbar { height: 14px; border-radius: 7px; background: var(--down, #ff6b6b); overflow: hidden; margin: 8px 0 4px; }
+.rl { height: 100%; background: var(--up, #2ecc9a); }
+a.pcard { display: block; color: inherit; }
+a.pcard .card { transition: border-color 0.15s; }
+a.pcard:hover .card { border-color: var(--accent); }
