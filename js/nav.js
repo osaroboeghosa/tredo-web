@@ -4,7 +4,7 @@
     ["Scores", "scores.html", true],
     ["Sentiment", "sentiment.html", false],
     ["COT", "cot.html", false],
-    ["Central Banks", "central-banks.html", false],
+    ["Central Banks", "central-banks.html", true],
     ["Seasonality", "seasonality.html", false],
     ["Alerts", "alerts.html", false],
     ["Tools", "tools.html", false],
