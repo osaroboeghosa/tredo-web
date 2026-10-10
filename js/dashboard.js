@@ -5,16 +5,16 @@ async function loadDash() {
     var c = await sb("currency_strength?select=currency,value,as_of&order=as_of.desc&limit=8");
     s.sort(function (a, b) { return Math.abs(b.score) - Math.abs(a.score); });
     var h = "";
-    if (s.length) h += '<p class="note">Scores as of ' + esc(s[0].as_of) + "</p>";
+    if (s.length) h += '<p class="note">Scores as of ' + esc(s[0].as_of) + ". Tap a card for the full breakdown.</p>";
     h += '<div class="pairs">';
     s.forEach(function (x) {
       var d = dirClass(x.direction);
-      h += '<div class="card"><div class="ptop"><span class="pname">' + esc(x.pair) + "</span>";
+      h += '<a class="pcard" href="pair.html?p=' + esc(x.pair) + '"><div class="card"><div class="ptop"><span class="pname">' + esc(x.pair) + "</span>";
       h += '<span class="pscore ' + d + '">' + fmtScore(x.score) + "</span></div>";
       h += '<div class="plabel ' + d + '">' + esc(x.label) + "</div>";
       h += '<div class="badges"><span class="badge' + (x.tier === 1 ? " t1" : "") + '">' + tierName(x.tier) + "</span>";
       h += '<span class="badge">' + esc(x.conviction) + " conviction</span></div>";
-      h += '<p class="reason">' + esc(x.reason) + "</p></div>";
+      h += '<p class="reason">' + esc(x.reason) + "</p></div></a>";
     });
     h += "</div>";
     if (c.length) {
