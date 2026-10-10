@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tredo | COT</title>
+<link rel="stylesheet" href="css/tokens.css?v=8">
+<link rel="stylesheet" href="css/app.css?v=8">
+<link rel="stylesheet" href="css/scores.css?v=8">
+</head>
+<body>
+<div id="nav"></div>
+<main>
+  <h1>COT</h1>
+  <p class="sub">Large speculator positioning per currency (CFTC futures).</p>
+  <div id="app">Loading...</div>
+</main>
+<div id="foot"></div>
+<script src="js/nav.js?v=8"></script>
+<script src="js/api.js?v=8"></script>
+<script src="js/ui.js?v=8"></script>
+<script>
+function n0(v) { return v == null ? "n/a" : Number(v).toLocaleString("en-US"); }
+async function go() {
+  var a = document.getElementById("app");
+  try {
+    var r = await sb("cot?select=currency,report_date,longs,shorts,net,weekly_change,pct52&order=report_date.desc&limit=80");
+    var d = r[0].report_date;
+    var rows = r.filter(function (x) { return x.report_date === d; });
+    rows.sort(function (p, q) { return q.pct52 - p.pct52; });
+    var h = '<p class="note">Report date ' + esc(d) + ".</p>";
+    h += '<div class="twrap"><table class="stbl"><thead><tr><th>Currency</th><th>Net</th><th>Week</th><th>52w pct</th></tr></thead><tbody>';
+    rows.forEach(function (x) {
+      h += "<tr><td><b>" + esc(x.currency) + '</b></td><td class="' + signClass(x.net) + '">' + n0(x.net) + '</td><td class="' + signClass(x.weekly_change) + '">' + n0(x.weekly_change) + "</td><td>" + (x.pct52 == null ? "n/a" : Math.round(x.pct52)) + "</td></tr>";
+    });
+    h += '</tbody></table></div><p class="note">Net = longs minus shorts. 52w pct = where net sits in its last 52 weeks (100 = most bullish). Data is released weekly with a delay.</p>';
+    a.innerHTML = h;
+  } catch (e) { a.textContent = "Could not load: " + e.message; }
+}
+go();
+</script>
+</body>
+</html>
