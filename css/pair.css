@@ -1,8 +1,25 @@
-.srow { margin-bottom: 8px; padding: 10px 14px; }
-.sn { font-size: 15px; }
-.sv { font-size: 20px; }
-.rbar { height: 14px; border-radius: 7px; background: var(--down, #ff6b6b); overflow: hidden; margin: 8px 0 4px; }
-.rl { height: 100%; background: var(--up, #2ecc9a); }
-a.pcard { display: block; color: inherit; }
-a.pcard .card { transition: border-color 0.15s; }
-a.pcard:hover .card { border-color: var(--accent); }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tredo | Dashboard</title>
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/app.css?v=6">
+<link rel="stylesheet" href="css/pair.css?v=6">
+</head>
+<body>
+<div id="nav"></div>
+<main>
+  <h1>Dashboard</h1>
+  <p class="sub">Which pairs deserve your attention, and why.</p>
+  <div id="app">Loading scores...</div>
+</main>
+<div id="foot"></div>
+<script src="js/nav.js?v=6"></script>
+<script src="js/api.js?v=6"></script>
+<script src="js/ui.js?v=6"></script>
+<script src="js/dashboard.js?v=6"></script>
+<script>loadDash();</script>
+</body>
+</html>
