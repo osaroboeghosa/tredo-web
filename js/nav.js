@@ -7,7 +7,7 @@
     ["Central Banks", "central-banks.html", true],
     ["Seasonality", "seasonality.html", true],
     ["Alerts", "alerts.html", false],
-    ["Tools", "tools.html", false],
+    ["Tools", "tools.html", true],
     ["What's New", "whats-new.html", true],
     ["Upgrade", "upgrade.html", true]
   ];
