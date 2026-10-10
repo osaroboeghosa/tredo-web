@@ -1,4 +1,4 @@
-var TREDO_URL = "https://dnhqqvxgojldpvmaaaho.supabase.co/rest/v1/";
+var TREDO_URL = "https://dnhqqvxgojldpvmaaaho.supabase.co";
 var TREDO_KEY = "sb_publishable_fPMkPFHXExto4m1RB20Y7Q_9jcQHlBS";
 
 async function sb(path) {
