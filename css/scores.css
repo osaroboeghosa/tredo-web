@@ -1,0 +1,7 @@
+.twrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; border: 1px solid var(--line); border-radius: var(--radius); }
+.stbl { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; background: var(--panel); }
+.stbl th { text-align: center; font-size: 12px; font-weight: 600; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.stbl td { text-align: center; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.stbl tr:last-child td { border-bottom: 0; }
+.stbl th:first-child, .stbl td:first-child { text-align: left; position: sticky; left: 0; background: var(--panel); border-right: 1px solid var(--line); }
+.tl { font-size: 12px; font-weight: 600; }
