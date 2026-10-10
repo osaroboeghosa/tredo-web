@@ -21,6 +21,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS s
 - js/dashboard.js: loads scores_latest and currency_strength, draws the Dashboard.
 - js/scores.js: loads scores_latest and signals_latest, draws the Scores table.
 - js/pair.js: loads one pair from scores_latest and signals_latest, draws blocks, signals and retail bar.
+- js/cotchart.js: draws the 12-week COT net positioning bars for both currencies on the pair page.
 - js/banks.js: loads central_banks and draws the Central Banks cards.
 
 ## Notes
