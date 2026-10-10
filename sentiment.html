@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tredo | Sentiment</title>
+<link rel="stylesheet" href="css/tokens.css?v=8">
+<link rel="stylesheet" href="css/app.css?v=8">
+<link rel="stylesheet" href="css/scores.css?v=8">
+</head>
+<body>
+<div id="nav"></div>
+<main>
+  <h1>Sentiment</h1>
+  <p class="sub">Retail trader positioning, read as a contrarian signal.</p>
+  <div id="app">Loading...</div>
+</main>
+<div id="foot"></div>
+<script src="js/nav.js?v=8"></script>
+<script src="js/api.js?v=8"></script>
+<script src="js/ui.js?v=8"></script>
+<script>
+function sg(p) { return p >= 70 ? -2 : p >= 58 ? -1 : p <= 30 ? 2 : p <= 42 ? 1 : 0; }
+async function go() {
+  var a = document.getElementById("app");
+  try {
+    var r = await sb("retail?select=pair,as_of,long_pct&order=as_of.desc&limit=200");
+    var seen = {}, rows = [];
+    r.forEach(function (x) { if (!seen[x.pair]) { seen[x.pair] = 1; rows.push(x); } });
+    rows.sort(function (p, q) { return q.long_pct - p.long_pct; });
+    var h = '<p class="note">As of ' + esc(rows[0].as_of) + '.</p><div class="twrap"><table class="stbl"><thead><tr><th>Pair</th><th>Long</th><th>Short</th><th>Signal</th></tr></thead><tbody>';
+    rows.forEach(function (x) {
+      var s = sg(x.long_pct);
+      h += "<tr><td><b>" + esc(x.pair) + "</b></td><td>" + x.long_pct + "%</td><td>" + (100 - x.long_pct) + '%</td><td class="' + signClass(s) + '">' + fmtScore(s) + "</td></tr>";
+    });
+    h += '</tbody></table></div><p class="note">Signal: crowded longs (70%+) read bearish, crowded shorts (30% or less) read bullish. Source: Myfxbook community outlook.</p>';
+    a.innerHTML = h;
+  } catch (e) { a.textContent = "Could not load: " + e.message; }
+}
+go();
+</script>
+</body>
+</html>
