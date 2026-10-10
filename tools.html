@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools - tredo</title>
+<link rel="stylesheet" href="css/tokens.css?v=11">
+<link rel="stylesheet" href="css/app.css?v=11">
+<link rel="stylesheet" href="css/tools.css?v=11">
+</head>
+<body>
+<div id="nav"></div>
+<main class="tools">
+<h1>Lot size calculator</h1>
+<p class="hint">Works out position size from your risk. Account currency: USD. Standard lot = 100,000 units.</p>
+<div class="card">
+<label>Pair</label>
+<select id="pair">
+<option>EURUSD</option><option>GBPUSD</option><option>AUDUSD</option><option>NZDUSD</option>
+<option>USDJPY</option><option>USDCAD</option><option>USDCHF</option>
+</select>
+<label>Account balance (USD)</label>
+<input id="bal" type="number" inputmode="decimal" value="1000">
+<label>Risk per trade (%)</label>
+<input id="risk" type="number" inputmode="decimal" value="1">
+<label>Stop loss (pips)</label>
+<input id="sl" type="number" inputmode="decimal" value="30">
+<label>Current price (needed for USD-base pairs)</label>
+<input id="price" type="number" inputmode="decimal" placeholder="e.g. 1.3800">
+</div>
+<div class="card" id="out">Enter your numbers.</div>
+<p class="hint">A planning aid only. Check pip value with your broker before trading.</p>
+</main>
+<div id="foot"></div>
+<script src="js/nav.js?v=11"></script>
+<script src="js/tools.js?v=11"></script>
+</body>
+</html>
