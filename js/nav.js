@@ -1,7 +1,7 @@
 (function () {
   var PAGES = [
     ["Dashboard", "index.html", true],
-    ["Scores", "scores.html", false],
+    ["Scores", "scores.html", true],
     ["Sentiment", "sentiment.html", false],
     ["COT", "cot.html", false],
     ["Central Banks", "central-banks.html", false],
