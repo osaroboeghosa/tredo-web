@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tredo | Seasonality</title>
+<link rel="stylesheet" href="css/tokens.css?v=8">
+<link rel="stylesheet" href="css/app.css?v=8">
+<link rel="stylesheet" href="css/scores.css?v=8">
+</head>
+<body>
+<div id="nav"></div>
+<main>
+  <h1>Seasonality</h1>
+  <p class="sub">Average move for the current month, 2 and 5 year.</p>
+  <div id="app">Loading...</div>
+</main>
+<div id="foot"></div>
+<script src="js/nav.js?v=8"></script>
+<script src="js/api.js?v=8"></script>
+<script src="js/ui.js?v=8"></script>
+<script>
+function ss(a, b) {
+  if (a == null || b == null || a * b <= 0) return 0;
+  var m = Math.min(Math.abs(a), Math.abs(b)), s = a > 0 ? 1 : -1;
+  return m >= 1 ? 2 * s : m >= 0.5 ? s : 0;
+}
+function f2(v) { return v == null ? "n/a" : (v > 0 ? "+" : "") + Number(v).toFixed(2); }
+async function go() {
+  var a = document.getElementById("app");
+  var mo = new Date().getMonth() + 1;
+  try {
+    var r = await sb("seasonality?month=eq." + mo + "&select=pair,avg2y,avg5y,trend");
+    var nm = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][mo];
+    r.sort(function (p, q) { return Math.abs(ss(q.avg2y, q.avg5y)) - Math.abs(ss(p.avg2y, p.avg5y)); });
+    var h = '<p class="note">' + nm + " averages.</p>";
+    h += '<div class="twrap"><table class="stbl"><thead><tr><th>Pair</th><th>2Y avg</th><th>5Y avg</th><th>Signal</th></tr></thead><tbody>';
+    r.forEach(function (x) {
+      var s = ss(x.avg2y, x.avg5y);
+      h += "<tr><td><b>" + esc(x.pair) + '</b></td><td class="' + signClass(x.avg2y) + '">' + f2(x.avg2y) + '</td><td class="' + signClass(x.avg5y) + '">' + f2(x.avg5y) + '</td><td class="' + signClass(s) + '">' + fmtScore(s) + "</td></tr>";
+    });
+    h += '</tbody></table></div><p class="note">Signal needs 2Y and 5Y to agree: both at 0.5 or more gives 1, both at 1.0 or more gives 2. Past patterns, not a forecast.</p>';
+    a.innerHTML = h;
+  } catch (e) { a.textContent = "Could not load: " + e.message; }
+}
+go();
+</script>
+</body>
+</html>
