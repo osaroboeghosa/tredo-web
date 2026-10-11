@@ -16,12 +16,23 @@
       }
       pv = 100000 * pip / pr;
     }
-    var risk = bal * rk / 100;
-    var lots = risk / (sl * pv);
+    var budget = bal * rk / 100;
+    var lots = Math.floor(budget / (sl * pv) * 100 + 1e-9) / 100;
+    if (lots < 0.01) {
+      var mn = 0.01 * sl * pv;
+      out.innerHTML =
+        "<div class='big'>0.00 lots</div>" +
+        "<div>Too small: even 0.01 lot would risk $" + mn.toFixed(2) +
+        ", more than your $" + budget.toFixed(2) + " budget.</div>" +
+        "<div>Lower the stop loss, or raise balance or risk %.</div>";
+      return;
+    }
+    var real = lots * sl * pv;
     out.innerHTML =
       "<div class='big'>" + lots.toFixed(2) + " lots</div>" +
+      "<div>Rounded down to 0.01 lot, so risk is never above your budget.</div>" +
       "<div>Units: " + Math.round(lots * 100000).toLocaleString() + "</div>" +
-      "<div>Money at risk: $" + risk.toFixed(2) + "</div>" +
+      "<div>Money at risk: $" + real.toFixed(2) + " (budget $" + budget.toFixed(2) + ")</div>" +
       "<div>Pip value per lot: $" + pv.toFixed(2) + "</div>";
   }
   ["pair", "bal", "risk", "sl", "price"].forEach(function (id) {
