@@ -13,10 +13,12 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS s
 - seasonality.html: Seasonality page, current month 2Y and 5Y averages per pair (page and script in one file).
 - whats-new.html: What's New page, change log.
 - upgrade.html: Upgrade placeholder, no payments yet.
+- tools.html: Tools page, lot size calculator.
 - css/tokens.css: colour, font and radius tokens (dark theme, teal accent).
 - css/app.css: shared layout, menu, card, badge and strength strip styles.
 - css/scores.css: table styles, also used by Sentiment, COT and Seasonality.
 - css/pair.css: styles for the pair page, signal rows, retail bar and tappable cards.
+- css/tools.css: styles for the Tools page and the lot size calculator.
 - js/api.js: Supabase read helper sb(path), holds the public URL and anon key.
 - js/nav.js: renders the shared menu and footer disclaimer on every page.
 - js/ui.js: small helpers for escaping text, score colours, tier names and number formats.
@@ -25,7 +27,9 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS s
 - js/pair.js: loads one pair from scores_latest and signals_latest, draws blocks, signals and retail bar.
 - js/cotchart.js: draws the 12-week COT net positioning bars for both currencies on the pair page.
 - js/banks.js: loads central_banks and draws the Central Banks cards.
+- js/tools.js: lot size calculator logic (risk amount, stop in pips, pair, price).
 
 ## Notes
 - Only public keys (Supabase URL and publishable key) are ever used here.
+- The site is to be rebuilt from scratch (modular, one settings file); this list will change then.
 - Scores help prioritise attention. They are not trade entries or financial advice.
