@@ -11,23 +11,23 @@ function hcell(v) {
   return '<td class="' + k + Math.abs(n) + '">' + (n > 0 ? "+" : "") + n + "</td>";
 }
 
+function sdot(v, i) {
+  var c = "dt" + (i === 6 ? " sp" : "");
+  if (v == null) return '<i class="' + c + ' na"></i>';
+  var n = Math.round(Number(v));
+  return '<i class="' + c + " " + (n > 0 ? "hp" : (n < 0 ? "hn" : "hz")) + Math.abs(n) + '"></i>';
+}
+
 function scoreTable(s, m) {
-  var h = '<div class="tw"><table class="ht"><thead>';
-  h += '<tr><th></th><th></th><th class="gh" colspan="6">Headline</th><th class="gh" colspan="3">Context only</th></tr>';
-  h += '<tr><th></th><th>Score</th>';
-  SIGS.forEach(function (x) { h += "<th>" + x[1] + "</th>"; });
-  h += "</tr></thead><tbody>";
+  var h = '<div class="sl">';
   s.forEach(function (x) {
     var sc = Number(x.score);
     var c = Math.abs(sc) < 10 ? "muted" : (sc > 0 ? "up" : "down");
-    h += '<tr><td class="pr"><a href="#/pair/' + esc(x.pair) + '">' + esc(x.pair) + "</a><small>" + esc(x.label) + "</small></td>";
-    h += '<td class="sc ' + c + '">' + (sc > 0 ? "+" : "") + sc + "</td>";
-    SIGS.forEach(function (n) {
-      h += hcell(m[x.pair] ? m[x.pair][n[0]] : null);
-    });
-    h += "</tr>";
+    var d = SIGS.map(function (n, i) { return sdot(m[x.pair] ? m[x.pair][n[0]] : null, i); }).join("");
+    h += '<a class="sr" href="#/pair/' + esc(x.pair) + '"><div class="sm"><div class="sn">' + esc(x.pair) + '</div><div class="sd2">' + esc(x.label) + '</div></div>';
+    h += '<div class="dots">' + d + '</div><div class="sv ' + c + '">' + (sc > 0 ? "+" : "") + sc + '</div><span class="sch">&#8250;</span></a>';
   });
-  return h + "</tbody></table></div>";
+  return h + "</div>";
 }
 
 PAGES.scores = async function (el) {
@@ -44,10 +44,8 @@ PAGES.scores = async function (el) {
     var h = '<h1>Scores</h1>';
     if (s.length) h += '<p class="muted sub">As of ' + esc(s[0].as_of) + '</p>';
     h += filtBar() + '<div id="res"></div>';
-    h += '<p class="note">Each signal runs from -2 (bearish) to +2 (bullish). n/a means no fresh data.</p>';
-    h += '<p class="note">Sales = retail sales (economic data). Retail = trader positioning, read as a contrarian signal.</p>';
-    h += '<p class="note">The score uses only the 6 headline signals. COT, Retail and Season are context.</p>';
-    h += '<p class="note">Tap a pair name to open its detail page.</p>';
+    h += '<p class="note">Dots show the 9 signals, from -2 (red) to +2 (green). An empty circle means no fresh data. The first 6 dots are the headline signals, in this order: Momentum, Rates, GDP, Retail Sales, CPI, UE. The last 3 are context only: COT, Retail (trader positioning, read as contrarian) and Season.</p>';
+    h += '<p class="note">The score uses only the 6 headline signals. Tap a row to open its detail page.</p>';
     el.innerHTML = h;
     var res = el.querySelector("#res");
     var draw = function () {
