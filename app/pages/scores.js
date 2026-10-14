@@ -32,7 +32,7 @@ PAGES.scores = async function (el) {
     s.forEach(function (x) {
       var sc = Number(x.score);
       var c = Math.abs(sc) < 10 ? "muted" : (sc > 0 ? "up" : "down");
-      h += '<tr><td class="pr"><a href="../pair.html?p=' + esc(x.pair) + '">' + esc(x.pair) + "</a><small>" + esc(x.label) + "</small></td>";
+      h += '<tr><td class="pr"><a href="#/pair/' + esc(x.pair) + '">' + esc(x.pair) + "</a><small>" + esc(x.label) + "</small></td>";
       h += '<td class="sc ' + c + '">' + (sc > 0 ? "+" : "") + sc + "</td>";
       SIGS.forEach(function (n) {
         h += hcell(m[x.pair] ? m[x.pair][n[0]] : null);
