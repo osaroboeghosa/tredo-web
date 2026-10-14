@@ -16,7 +16,10 @@ function mcRow(rows, c, k, label) {
     return lv ? Number(o.value).toLocaleString("en-US", { maximumFractionDigits: 1 }) : Number(o.value).toFixed(2) + "%";
   };
   var ch = null;
-  if (p) ch = lv ? (Number(x.value) / Number(p.value) - 1) * 100 : Number(x.value) - Number(p.value);
+  if (p) {
+    ch = lv ? (Number(x.value) / Number(p.value) - 1) * 100 : Number(x.value) - Number(p.value);
+    ch = Math.round(ch * 100) / 100;
+  }
   var t = ch == null ? "n/a" : (ch > 0 ? "+" : "") + ch.toFixed(2) + (lv ? "%" : " pt");
   var s = '<div class="mrow"><div class="mt"><span>' + label + '</span><span class="' + mcCls(ch, k === "UE") + '">' + t + '</span></div>';
   s += '<div class="ms">' + f(x) + " (" + esc(String(x.obs_date).slice(0, 7)) + ")" + (p ? " · before " + f(p) : "") + "</div></div>";
@@ -25,10 +28,9 @@ function mcRow(rows, c, k, label) {
 
 function mcBank(k) {
   if (!k) return "";
-  var r = k.rate_label ? String(k.rate_label) : (k.policy_rate == null ? "n/a" : String(k.policy_rate));
-  if (r !== "n/a" && r.indexOf("%") < 0) r += "%";
-  var s = '<div class="mrow"><div class="mt"><span>' + esc(k.bank) + '</span><span>' + esc(r) + "</span></div>";
-  return s + '<div class="ms">Next meeting ' + esc(k.next_meeting || "n/a") + "</div></div>";
+  var v = k.policy_rate == null ? "n/a" : Number(k.policy_rate) + "%";
+  var s = '<div class="mrow"><div class="mt"><span>' + esc(k.rate_label || "Policy rate") + "</span><span>" + v + "</span></div>";
+  return s + '<div class="ms">' + esc(k.bank) + " · next meeting " + esc(k.next_meeting || "n/a") + "</div></div>";
 }
 
 PAGES.macro = async function (el) {
