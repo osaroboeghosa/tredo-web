@@ -26,6 +26,8 @@ function route() {
   var name = parts[0] || "home";
   var arg = parts[1] || "";
   var tab = name === "pair" ? "scores" : name;
+  var isTab = TABS.some(function (t) { return t[0] === tab; });
+  if (!isTab) tab = "more";
   document.getElementById("tabs").innerHTML = TABS.map(function (t) {
     return '<a href="#/' + t[0] + '" class="' + (t[0] === tab ? "on" : "") + '">' + t[1] + '</a>';
   }).join("");
