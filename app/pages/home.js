@@ -10,7 +10,7 @@ function ring(score) {
 
 function pairCard(x) {
   var s = Number(x.score);
-  return '<a class="card pair" href="../pair.html?p=' + esc(x.pair) + '">' + ring(s) +
+  return '<a class="card pair" href="#/pair/' + esc(x.pair) + '">' + ring(s) +
     '<div class="sym">' + esc(x.pair) + '</div><div class="lab">' + esc(x.label) + '</div></a>';
 }
 
