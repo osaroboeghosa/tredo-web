@@ -1,0 +1,16 @@
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
+.ht{border-collapse:separate;border-spacing:3px;width:100%;font-size:12px}
+.ht th{color:var(--muted);font-weight:600;padding:4px 2px;text-align:center}
+.ht .gh{font-size:11px;border-bottom:1px solid var(--line)}
+.ht td{text-align:center;padding:10px 2px;min-width:36px;border-radius:8px;font-weight:600}
+.ht td.pr{text-align:left;position:sticky;left:0;background:var(--bg);min-width:84px;padding:6px 8px 6px 4px;z-index:2}
+.ht td.pr a{display:block;color:var(--text);font-weight:700;font-size:13px}
+.ht td.pr small{display:block;color:var(--muted);font-size:11px;font-weight:400}
+.ht td.sc{font-size:14px;font-weight:700}
+.ht td.na{color:var(--muted);font-weight:400;font-size:11px}
+.ht td.hz0{background:var(--card);color:var(--muted)}
+.ht td.hp1{background:color-mix(in srgb,var(--up) 30%,transparent)}
+.ht td.hp2{background:color-mix(in srgb,var(--up) 60%,transparent)}
+.ht td.hn1{background:color-mix(in srgb,var(--down) 30%,transparent)}
+.ht td.hn2{background:color-mix(in srgb,var(--down) 60%,transparent)}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
