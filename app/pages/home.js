@@ -18,7 +18,14 @@ PAGES.home = async function (el) {
   el.innerHTML = '<p class="muted">Loading...</p>';
   try {
     var rows = await sb("scores_latest?select=pair,score,label&order=score.desc");
-    el.innerHTML = '<h1>Which pairs deserve attention</h1><p class="muted sub">Macro gives the bias. The chart gives the timing.</p><div class="grid">' + rows.map(pairCard).join("") + '</div>';
+    el.innerHTML = '<h1>Which pairs deserve attention</h1><p class="muted sub">Macro gives the bias. The chart gives the timing.</p>' + filtBar() + '<div id="res"></div>';
+    var res = el.querySelector("#res");
+    var draw = function () {
+      var f = rows.filter(function (x) { return filtMatch(x.pair); });
+      res.innerHTML = f.length ? '<div class="grid">' + f.map(pairCard).join("") + '</div>' : filtEmpty();
+    };
+    filtWire(el, draw);
+    draw();
   } catch (e) {
     el.innerHTML = '<p class="down">Could not load scores: ' + esc(e.message) + '</p>';
   }
