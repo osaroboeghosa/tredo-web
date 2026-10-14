@@ -10,3 +10,4 @@
 .msw i{position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;transition:left .2s}
 .msw.on{background:var(--up)}
 .msw.on i{left:22px}
+#theme{display:none}
