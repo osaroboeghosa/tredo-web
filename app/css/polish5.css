@@ -1,0 +1,14 @@
+main:has(.ph)>p.sub:first-child{font-size:17px;margin:0 0 4px}
+main:has(.ph)>p.sub:first-child a{color:var(--accent)}
+.card.ph{background:transparent;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:4px 0 8px}
+.ph .ring{width:132px;height:132px}
+.ph .pname{font-size:28px;font-weight:700}
+.ph .plab{font-size:17px;font-weight:600}
+.badges{justify-content:center;gap:8px}
+.badge{background:var(--card);border:0;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--muted)}
+main:has(.ph) .reason{font-size:15px;line-height:1.45;padding:6px 16px}
+.srow{border-radius:0;margin:0;border:0;border-bottom:.5px solid var(--line)}
+h2+.srow{border-radius:12px 12px 0 0}
+.srow:has(+h2),.srow:last-child{border-radius:0 0 12px 12px;border-bottom:0}
+.srow .reason{padding:4px 0 0;font-size:14px;color:var(--muted)}
+.strip .chip{border-radius:12px}
