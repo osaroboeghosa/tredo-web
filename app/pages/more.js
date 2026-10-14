@@ -1,4 +1,5 @@
 var mrItems = [
+  ["weekly", "Weekly report", "Score changes, currency strength and upcoming events"],
   ["sentiment", "Sentiment", "Where retail traders are positioned, read as a contrarian signal"],
   ["macro", "Macro", "Growth, retail sales, inflation and jobs for each currency"],
   ["seasonality", "Seasonality", "Average return of each calendar month"],
