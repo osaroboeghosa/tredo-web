@@ -22,12 +22,15 @@ function drawShell() {
 }
 
 function route() {
-  var name = (location.hash || "#/home").replace("#/", "") || "home";
+  var parts = (location.hash || "#/home").replace("#/", "").split("/");
+  var name = parts[0] || "home";
+  var arg = parts[1] || "";
+  var tab = name === "pair" ? "scores" : name;
   document.getElementById("tabs").innerHTML = TABS.map(function (t) {
-    return '<a href="#/' + t[0] + '" class="' + (t[0] === name ? "on" : "") + '">' + t[1] + '</a>';
+    return '<a href="#/' + t[0] + '" class="' + (t[0] === tab ? "on" : "") + '">' + t[1] + '</a>';
   }).join("");
   var el = document.getElementById("view");
-  if (PAGES[name]) PAGES[name](el);
+  if (PAGES[name]) PAGES[name](el, arg);
   else el.innerHTML = '<h1>' + esc(name) + '</h1><p class="muted sub">This page is being rebuilt.</p>';
   window.scrollTo(0, 0);
 }
