@@ -1,0 +1,38 @@
+var TABS = [["home", "Home"], ["scores", "Scores"], ["flow", "Flow"], ["banks", "Banks"], ["more", "More"]];
+
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem("tredo-theme", t); } catch (e) {}
+}
+
+function initTheme() {
+  var t = null;
+  try { t = localStorage.getItem("tredo-theme"); } catch (e) {}
+  if (t) setTheme(t);
+}
+
+function drawShell() {
+  document.getElementById("top").innerHTML = '<div class="brand">' + esc(TREDO.name) + '<b>.</b></div><button id="theme">Light / Dark</button>';
+  document.getElementById("foot").textContent = TREDO.disclaimer;
+  document.getElementById("theme").onclick = function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    setTheme(cur === "light" ? "dark" : "light");
+  };
+}
+
+function route() {
+  var name = (location.hash || "#/home").replace("#/", "") || "home";
+  document.getElementById("tabs").innerHTML = TABS.map(function (t) {
+    return '<a href="#/' + t[0] + '" class="' + (t[0] === name ? "on" : "") + '">' + t[1] + '</a>';
+  }).join("");
+  var el = document.getElementById("view");
+  if (PAGES[name]) PAGES[name](el);
+  else el.innerHTML = '<h1>' + esc(name) + '</h1><p class="muted sub">This page is being rebuilt.</p>';
+  window.scrollTo(0, 0);
+}
+
+initTheme();
+drawShell();
+route();
+window.addEventListener("hashchange", route);
