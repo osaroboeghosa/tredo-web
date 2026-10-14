@@ -14,4 +14,6 @@ h2{font-size:16px;margin:20px 0 8px}
 .sh{display:flex;justify-content:space-between;align-items:center}
 .sh b{font-size:16px}
 .sv{font-size:20px;font-weight:700}
+.rbar{height:12px;border-radius:999px;background:var(--down);overflow:hidden;margin-top:6px}
+.rl{height:100%;background:var(--up)}
 footer{padding-bottom:96px}
