@@ -11,25 +11,24 @@ function bkWhen(n) {
   return ["In " + n + (n === 1 ? " day" : " days"), n <= 7 ? "up" : "muted"];
 }
 
+function bkRow(k) {
+  var w = bkWhen(bkDays(k.next_meeting));
+  var st = k.stance ? esc(k.stance) + (k.trend ? ", " + esc(k.trend) : "") : "";
+  var h = '<div class="bkq"><div class="bkt"><div class="bkm"><span class="bkcu">' + esc(k.currency) + '</span> <span class="bkna">' + esc(k.bank) + '</span></div>';
+  h += '<div class="bkrt">' + (k.policy_rate == null ? "n/a" : Number(k.policy_rate) + "%") + '</div></div>';
+  h += '<div class="bkt"><div class="bks">' + esc(k.rate_label || "Policy rate") + '</div><div class="bks ' + w[1] + '">' + w[0] + '</div></div>';
+  h += '<div class="bks">Next ' + esc(k.next_meeting || "n/a") + " &middot; Last " + esc(k.last_meeting || "n/a") + (st ? " &middot; " + st : "") + '</div>';
+  if (k.note) h += '<div class="bks bknt">' + esc(k.note) + '</div>';
+  return h + "</div>";
+}
+
 PAGES.banks = async function (el) {
   el.innerHTML = '<p class="muted">Loading...</p>';
   try {
     var r = await sb("central_banks?select=currency,bank,policy_rate,rate_label,stance,trend,last_meeting,next_meeting,note&order=next_meeting.asc");
-    var h = '<h1>Central Banks</h1><p class="muted sub">Policy rates, stance and the next meeting. Soonest meeting first.</p><div class="grid">';
-    r.forEach(function (k) {
-      var w = bkWhen(bkDays(k.next_meeting));
-      var st = k.stance ? esc(k.stance) + (k.trend ? ", " + esc(k.trend) : "") : "";
-      h += '<div class="card bkc"><div class="mh"><span class="mcur">' + esc(k.currency) + "</span>" + (st ? '<span class="badge">' + st + "</span>" : "") + "</div>";
-      h += '<div class="bkn">' + esc(k.bank) + "</div>";
-      h += '<div class="bkr">' + (k.policy_rate == null ? "n/a" : Number(k.policy_rate) + "%") + "</div>";
-      h += '<div class="ms">' + esc(k.rate_label || "Policy rate") + "</div>";
-      h += '<div class="mrow"><div class="mt"><span>Next meeting</span><span>' + esc(k.next_meeting || "n/a") + '</span></div><div class="ms ' + w[1] + '">' + w[0] + "</div></div>";
-      h += '<div class="mrow"><div class="mt"><span>Last meeting</span><span>' + esc(k.last_meeting || "n/a") + "</span></div></div>";
-      if (k.note) h += '<div class="ms bkx">' + esc(k.note) + "</div>";
-      h += "</div>";
-    });
-    h += "</div>";
-    h += '<p class="note">Rates, stance and meeting dates are updated by hand after each meeting. If a date has passed, the card says so.</p>';
+    var h = '<h1>Central Banks</h1><p class="muted sub">Policy rates, stance and the next meeting. Soonest meeting first.</p>';
+    h += '<div class="bkg">' + r.map(bkRow).join("") + "</div>";
+    h += '<p class="note">Rates, stance and meeting dates are updated by hand after each meeting. If a date has passed, the row says so.</p>';
     h += '<p class="note">Stance describes the tone of recent policy. It is context for the Rates signal and is not a forecast of the next decision.</p>';
     el.innerHTML = h;
   } catch (e) {
