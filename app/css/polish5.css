@@ -10,5 +10,5 @@ main:has(.ph) .reason{font-size:15px;line-height:1.45;padding:6px 16px}
 .srow{border-radius:0;margin:0;border:0;border-bottom:.5px solid var(--line)}
 h2+.srow{border-radius:12px 12px 0 0}
 .srow:has(+h2),.srow:last-child{border-radius:0 0 12px 12px;border-bottom:0}
-.srow .reason{padding:4px 0 0;font-size:14px;color:var(--muted)}
+main:has(.ph) .srow .reason{padding:4px 0 0;font-size:14px;color:var(--muted)}
 .strip .chip{border-radius:12px}
