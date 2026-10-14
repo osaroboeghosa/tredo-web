@@ -10,7 +10,7 @@ function flowBars(list) {
   var a = list.slice(0, 12).reverse();
   var mx = 1;
   a.forEach(function (x) { mx = Math.max(mx, Math.abs(Number(x.net))); });
-  var s = '<svg class="fbars" viewBox="0 0 120 40" preserveAspectRatio="none">';
+  var s = '<svg class="flb" viewBox="0 0 120 40" preserveAspectRatio="none">';
   s += '<line x1="0" y1="20" x2="120" y2="20" stroke="var(--line)" stroke-width="1"/>';
   a.forEach(function (x, i) {
     var v = Number(x.net);
@@ -27,6 +27,17 @@ function flowTag(p) {
   if (p >= 80) return ["Crowded long", "up"];
   if (p <= 20) return ["Crowded short", "down"];
   return ["Mid range", "muted"];
+}
+
+function flowRow(l) {
+  var x = l[0];
+  var p = x.pct52 == null ? null : Math.round(Number(x.pct52));
+  var t = flowTag(p);
+  return '<div class="flr"><div class="flm"><div class="flc">' + esc(x.currency) + '</div>' +
+    '<div class="fls ' + t[1] + '">' + t[0] + (p == null ? "" : " &middot; " + p + "/100") + '</div></div>' +
+    flowBars(l) +
+    '<div class="flv"><div class="flnet ' + flowSign(x.net) + '">' + flowN(x.net) + '</div>' +
+    '<div class="fls">Week <span class="' + flowSign(x.weekly_change) + '">' + flowN(x.weekly_change) + '</span></div></div></div>';
 }
 
 PAGES.flow = async function (el) {
@@ -46,21 +57,9 @@ PAGES.flow = async function (el) {
     });
     var h = '<h1>Flow</h1>';
     if (cur.length) h += '<p class="muted sub">Large speculator positioning. Report date ' + esc(cur[0][0].report_date) + '</p>';
-    h += '<div class="grid">';
-    cur.forEach(function (l) {
-      var x = l[0];
-      var p = x.pct52 == null ? null : Math.round(Number(x.pct52));
-      var t = flowTag(p);
-      h += '<div class="card fcard"><div class="frow"><span class="fcur">' + esc(x.currency) + '</span><span class="ftag ' + t[1] + '">' + t[0] + '</span></div>';
-      h += flowBars(l);
-      h += '<div class="fnum">Net <span class="' + flowSign(x.net) + '">' + flowN(x.net) + '</span></div>';
-      h += '<div class="fnum">Week <span class="' + flowSign(x.weekly_change) + '">' + flowN(x.weekly_change) + '</span></div>';
-      h += '<div class="fnum">52-week rank ' + (p == null ? "n/a" : p) + ' of 100</div></div>';
-    });
-    h += '</div>';
-    h += '<p class="note">Bars show net positioning for the last 12 weeks, oldest on the left. 100 means the most bullish reading of the past 52 weeks.</p>';
-    h += '<p class="note">Crowded means 80 or above, or 20 or below. It shows positioning, not a forecast. Our tests found no reliable edge from this data alone.</p>';
-    h += '<p class="note">Data is released weekly, with a delay.</p>';
+    h += '<div class="flg">' + cur.map(flowRow).join("") + '</div>';
+    h += '<p class="note">Bars show net positioning for the last 12 weeks, oldest on the left. The score out of 100 compares today with the past 52 weeks: 100 is the most bullish reading.</p>';
+    h += '<p class="note">Crowded means 80 or above, or 20 or below. It shows positioning, not a forecast. Data is released weekly, with a delay.</p>';
     el.innerHTML = h;
   } catch (e) {
     el.innerHTML = '<p class="down">Could not load flow: ' + esc(e.message) + '</p>';
