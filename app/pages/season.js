@@ -1,9 +1,15 @@
 var ssSel = "";
 var ssMon = ["J","F","M","A","M","J","J","A","S","O","N","D"];
+var ssNm = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 function ssF(v) {
   v = Number(v);
   return (v > 0 ? "+" : "") + v.toFixed(2) + "%";
+}
+
+function ssCl(v) {
+  v = Number(v);
+  return v > 0 ? "up" : v < 0 ? "down" : "";
 }
 
 function ssChart(by, cm) {
@@ -33,18 +39,12 @@ function ssChart(by, cm) {
 function ssDetail(by, cm) {
   var r = by[cm];
   if (!r) return "";
-  var h = '<div class="card"><div class="rtr"><b>This month</b><span class="muted">' + ssMon[cm - 1] + '</span></div>';
-  h += '<div class="rtn"><span>2-year average</span><span>' + ssF(r.avg2y) + '</span></div>';
-  h += '<div class="rtn"><span>5-year average</span><span>' + ssF(r.avg5y) + '</span></div>';
-  if (typeof r.trend === "string" || typeof r.trend === "number") h += '<div class="rtn"><span>Trend</span><span>' + esc(String(r.trend)) + '</span></div>';
+  var a = [gxr("2-year average", "", ssF(r.avg2y), ssCl(r.avg2y)), gxr("5-year average", "", ssF(r.avg5y), ssCl(r.avg5y))];
+  if (typeof r.trend === "string" || typeof r.trend === "number") a.push(gxr("Trend", "", esc(String(r.trend))));
   var p = r.pattern;
   if (typeof p === "string") { try { p = JSON.parse(p); } catch (e) { p = null; } }
-  if (p && p.length) {
-    h += '<p class="muted ssy">Past years: ' + p.map(function (q) {
-      return esc(String(q.y)) + " " + ssF(q.r);
-    }).join(", ") + '</p>';
-  }
-  return h + '</div>';
+  if (p && p.length) a.push(gxr("Past years", p.map(function (q) { return esc(String(q.y)) + " " + ssF(q.r); }).join(", "), ""));
+  return "<h2>This month: " + ssNm[cm - 1] + "</h2>" + gxg(a);
 }
 
 PAGES.seasonality = async function (el) {
@@ -71,9 +71,9 @@ PAGES.seasonality = async function (el) {
       var o = '<div class="ssbs">' + f.map(function (p) {
         return '<button class="ssb' + (p === ssSel ? ' on' : '') + '" data-p="' + esc(p) + '">' + esc(p) + '</button>';
       }).join("") + '</div>';
-      o += '<div class="card"><b>' + esc(ssSel) + '</b>' + ssChart(all[ssSel], cm) + '</div>';
+      o += '<div class="gx gp"><b>' + esc(ssSel) + '</b>' + ssChart(all[ssSel], cm) + '</div>';
       o += ssDetail(all[ssSel], cm);
-      o += '<p><a href="#/pair/' + esc(ssSel) + '">Open ' + esc(ssSel) + ' detail page</a></p>';
+      o += '<p class="note"><a href="#/pair/' + esc(ssSel) + '">Open ' + esc(ssSel) + ' detail page</a></p>';
       res.innerHTML = o;
     };
     res.addEventListener("click", function (e) {
