@@ -21,9 +21,11 @@ function wkList(o, withOld) {
 
 function wkS(n) { return (n > 0 ? "+" : "") + Math.round(n); }
 
-function wkR(l, n, d) {
+function wkR(l, n, d, pair) {
   var c = d > 0 ? "up" : d < 0 ? "down" : "muted";
-  return gxr(esc(l), "", wkS(n) + ' <span class="' + c + '">(' + wkS(d) + ')</span>');
+  var v = wkS(n) + ' <span class="' + c + '">(' + wkS(d) + ')</span>';
+  if (!pair) return gxr(esc(l), "", v);
+  return '<a class="gr" style="color:var(--text)" href="#/pair/' + esc(l) + '"><div class="gl">' + esc(l) + '</div><span class="gv">' + v + '</span><span class="sch">&#8250;</span></a>';
 }
 
 function wkG(t, a, f) {
@@ -42,18 +44,19 @@ PAGES.weekly = async function (el) {
     h += '<p class="muted sub">Changes since the earliest stored day in the last 7 days. Latest scores: ' + esc(a.L) + '</p>';
     var up = L.filter(function (x) { return x.d > 0; }).sort(function (p, q) { return q.d - p.d; }).slice(0, 5);
     var dn = L.filter(function (x) { return x.d < 0; }).sort(function (p, q) { return p.d - q.d; }).slice(0, 5);
-    var rr = function (x) { return wkR(x.k, x.n, x.d); };
-    h += wkG("Biggest score rises", up, rr) + wkG("Biggest score falls", dn, rr);
+    var rp = function (x) { return wkR(x.k, x.n, x.d, 1); };
+    var rc = function (x) { return wkR(x.k, x.n, x.d, 0); };
+    h += wkG("Biggest score rises", up, rp) + wkG("Biggest score falls", dn, rp);
     if (cs.length) {
       var c = wkList(wkCmp(cs, "currency", "value"), false).sort(function (p, q) { return q.n - p.n; });
-      h += wkG("Currency strength", c, rr);
+      h += wkG("Currency strength", c, rc);
     }
     h += wkG("Upcoming high-impact events (UTC)", ev, function (x) {
       var t = String(x.release_ts).slice(5, 16).replace("T", " ");
       var f = (x.forecast ? "Forecast " + x.forecast : "") + (x.previous ? (x.forecast ? ", " : "") + "previous " + x.previous : "");
       return gxr(esc(x.currency) + " " + esc(x.title), esc(f), esc(t));
     });
-    h += '<p class="note">Figures in brackets are the change in score points. Scores are an attention ranking, not forecasts.</p>';
+    h += '<p class="note">Figures in brackets are the change in score points. Tap a pair to open its detail page. Scores are an attention ranking, not forecasts.</p>';
     el.innerHTML = h;
   } catch (e) {
     el.innerHTML = '<p class="down">Could not load the weekly report: ' + esc(e.message) + '</p>';
