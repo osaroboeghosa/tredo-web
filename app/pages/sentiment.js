@@ -14,10 +14,11 @@ function rtCard(x) {
   var l = Math.round(Number(x.long_pct));
   var s = rtSig(l);
   var c = s === 0 ? "muted" : (s > 0 ? "up" : "down");
-  return '<a class="card rt" href="#/pair/' + esc(x.pair) + '"><div class="rtr"><span class="rtp">' + esc(x.pair) + '</span><span class="' + c + '">' + (s > 0 ? "+" : "") + s + '</span></div>' +
-    '<div class="rtbar"><i class="rtl" style="width:' + l + '%"></i><i class="rts" style="width:' + (100 - l) + '%"></i></div>' +
-    '<div class="rtn"><span>Long ' + l + '%</span><span>Short ' + (100 - l) + '%</span></div>' +
-    '<div class="rtn"><span class="' + c + '">' + rtWord(s) + '</span></div></a>';
+  return '<a class="sxr" href="#/pair/' + esc(x.pair) + '"><div class="sxt"><div class="sxm"><div class="sxp">' + esc(x.pair) + '</div>' +
+    '<div class="sxs ' + c + '">' + rtWord(s) + '</div></div>' +
+    '<span class="sxv ' + c + '">' + (s > 0 ? "+" : "") + s + '</span><span class="sch">&#8250;</span></div>' +
+    '<div class="sxb"><i class="sxl" style="width:' + l + '%"></i></div>' +
+    '<div class="sxn"><span>Long ' + l + '%</span><span>Short ' + (100 - l) + '%</span></div></a>';
 }
 
 PAGES.sentiment = async function (el) {
@@ -38,7 +39,7 @@ PAGES.sentiment = async function (el) {
     var res = el.querySelector("#res");
     var draw = function () {
       var f = rows.filter(function (x) { return filtMatch(x.pair); });
-      res.innerHTML = f.length ? f.map(rtCard).join("") : filtEmpty();
+      res.innerHTML = f.length ? '<div class="sxg">' + f.map(rtCard).join("") + '</div>' : filtEmpty();
     };
     filtWire(el, draw);
     draw();
