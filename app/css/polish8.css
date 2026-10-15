@@ -1,0 +1,11 @@
+.sxg{background:var(--card);border-radius:12px;overflow:hidden}
+.sxr{display:block;padding:10px 16px 12px;position:relative;color:var(--text)}
+.sxr+.sxr:before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--line)}
+.sxt{display:flex;align-items:center;gap:12px}
+.sxm{flex:1;min-width:0}
+.sxp{font-size:17px;font-weight:600}
+.sxs{font-size:13px;color:var(--muted)}
+.sxv{font-size:17px;font-weight:600}
+.sxb{display:flex;height:6px;border-radius:3px;overflow:hidden;margin:8px 0 4px;background:var(--down)}
+.sxl{display:block;height:100%;background:var(--up)}
+.sxn{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
