@@ -10,7 +10,7 @@ function mcCls(v, inv) {
 
 function mcRow(rows, c, k, label) {
   var a = rows[c + "_" + k];
-  if (!a || !a.length) return '<div class="mrow"><div class="mt"><span>' + label + '</span><span class="muted">n/a</span></div></div>';
+  if (!a || !a.length) return gxr(label, "", "n/a", "muted");
   var x = a[0], p = a[1], lv = x.key === "level";
   var f = function (o) {
     return lv ? Number(o.value).toLocaleString("en-US", { maximumFractionDigits: 1 }) : Number(o.value).toFixed(2) + "%";
@@ -21,16 +21,12 @@ function mcRow(rows, c, k, label) {
     ch = Math.round(ch * 100) / 100;
   }
   var t = ch == null ? "n/a" : (ch > 0 ? "+" : "") + ch.toFixed(2) + (lv ? "%" : " pt");
-  var s = '<div class="mrow"><div class="mt"><span>' + label + '</span><span class="' + mcCls(ch, k === "UE") + '">' + t + '</span></div>';
-  s += '<div class="ms">' + f(x) + " (" + esc(String(x.obs_date).slice(0, 7)) + ")" + (p ? " · before " + f(p) : "") + "</div></div>";
-  return s;
+  return gxr(label, f(x) + " (" + esc(String(x.obs_date).slice(0, 7)) + ")" + (p ? " &middot; before " + f(p) : ""), t, mcCls(ch, k === "UE"));
 }
 
 function mcBank(k) {
   if (!k) return "";
-  var v = k.policy_rate == null ? "n/a" : Number(k.policy_rate) + "%";
-  var s = '<div class="mrow"><div class="mt"><span>' + esc(k.rate_label || "Policy rate") + "</span><span>" + v + "</span></div>";
-  return s + '<div class="ms">' + esc(k.bank) + " · next meeting " + esc(k.next_meeting || "n/a") + "</div></div>";
+  return gxr(esc(k.rate_label || "Policy rate"), esc(k.bank) + " &middot; next meeting " + esc(k.next_meeting || "n/a"), k.policy_rate == null ? "n/a" : Number(k.policy_rate) + "%");
 }
 
 PAGES.macro = async function (el) {
@@ -46,15 +42,14 @@ PAGES.macro = async function (el) {
       if (rows[x.series].length < 2) rows[x.series].push(x);
     });
     b.forEach(function (x) { bk[x.currency] = x; });
-    var h = '<h1>Macro</h1><p class="muted sub">Latest economic readings and policy rate for each currency.</p><div class="grid">';
+    var h = '<h1>Macro</h1><p class="muted sub">Latest economic readings and policy rate for each currency.</p>';
     MCUR.forEach(function (c) {
       var k = bk[c];
-      var st = k && k.stance ? esc(k.stance) + (k.trend ? ", " + esc(k.trend) : "") : "";
-      h += '<div class="card mcard"><div class="mh"><span class="mcur">' + c + "</span>" + (st ? '<span class="badge">' + st + "</span>" : "") + "</div>";
-      MMET.forEach(function (m) { h += mcRow(rows, c, m[0], m[1]); });
-      h += mcBank(k) + "</div>";
+      var st = k && k.stance ? " &middot; " + esc(k.stance) + (k.trend ? ", " + esc(k.trend) : "") : "";
+      var a = MMET.map(function (m) { return mcRow(rows, c, m[0], m[1]); });
+      a.push(mcBank(k));
+      h += "<h2>" + c + st + "</h2>" + gxg(a);
     });
-    h += "</div>";
     h += '<p class="note">Each change compares the latest release with the one before it. Index and level series show the percent change. Rate series show the change in percentage points.</p>';
     h += '<p class="note">For unemployment, a fall is shown in green. These readings feed the headline score, but a reading alone is not a forecast.</p>';
     el.innerHTML = h;
