@@ -23,7 +23,11 @@ function wkS(n) { return (n > 0 ? "+" : "") + Math.round(n); }
 
 function wkR(l, n, d) {
   var c = d > 0 ? "up" : d < 0 ? "down" : "muted";
-  return '<div class="rtn"><span>' + esc(l) + '</span><span>' + wkS(n) + ' <span class="' + c + '">(' + wkS(d) + ')</span></span></div>';
+  return gxr(esc(l), "", wkS(n) + ' <span class="' + c + '">(' + wkS(d) + ')</span>');
+}
+
+function wkG(t, a, f) {
+  return "<h2>" + t + "</h2>" + gxg(a.length ? a.map(f) : [gxr("None yet", "", "", "muted")]);
 }
 
 PAGES.weekly = async function (el) {
@@ -38,21 +42,17 @@ PAGES.weekly = async function (el) {
     h += '<p class="muted sub">Changes since the earliest stored day in the last 7 days. Latest scores: ' + esc(a.L) + '</p>';
     var up = L.filter(function (x) { return x.d > 0; }).sort(function (p, q) { return q.d - p.d; }).slice(0, 5);
     var dn = L.filter(function (x) { return x.d < 0; }).sort(function (p, q) { return p.d - q.d; }).slice(0, 5);
-    h += '<div class="card"><b>Biggest score rises</b>' + (up.length ? up.map(function (x) { return wkR(x.k, x.n, x.d); }).join("") : '<div class="rtn"><span class="muted">None yet</span></div>') + '</div>';
-    h += '<div class="card"><b>Biggest score falls</b>' + (dn.length ? dn.map(function (x) { return wkR(x.k, x.n, x.d); }).join("") : '<div class="rtn"><span class="muted">None yet</span></div>') + '</div>';
+    var rr = function (x) { return wkR(x.k, x.n, x.d); };
+    h += wkG("Biggest score rises", up, rr) + wkG("Biggest score falls", dn, rr);
     if (cs.length) {
       var c = wkList(wkCmp(cs, "currency", "value"), false).sort(function (p, q) { return q.n - p.n; });
-      h += '<div class="card"><b>Currency strength</b>' + c.map(function (x) { return wkR(x.k, x.n, x.d); }).join("") + '</div>';
+      h += wkG("Currency strength", c, rr);
     }
-    h += '<div class="card"><b>Upcoming high-impact events (UTC)</b>';
-    if (!ev.length) h += '<div class="rtn"><span class="muted">None stored yet</span></div>';
-    ev.forEach(function (x) {
+    h += wkG("Upcoming high-impact events (UTC)", ev, function (x) {
       var t = String(x.release_ts).slice(5, 16).replace("T", " ");
       var f = (x.forecast ? "Forecast " + x.forecast : "") + (x.previous ? (x.forecast ? ", " : "") + "previous " + x.previous : "");
-      h += '<div class="rtn"><span>' + esc(x.currency) + ' ' + esc(x.title) + '</span><span>' + esc(t) + '</span></div>';
-      if (f) h += '<div class="rtn"><span class="muted">' + esc(f) + '</span></div>';
+      return gxr(esc(x.currency) + " " + esc(x.title), esc(f), esc(t));
     });
-    h += '</div>';
     h += '<p class="note">Figures in brackets are the change in score points. Scores are an attention ranking, not forecasts.</p>';
     el.innerHTML = h;
   } catch (e) {
