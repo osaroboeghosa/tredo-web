@@ -3,12 +3,13 @@ var pfNames = ["Strong (50+)", "Moderate (25 to 49)", "Lean (10 to 24)"];
 function pfB(a) { return a >= 50 ? 0 : a >= 25 ? 1 : 2; }
 
 function pfRow(name, o) {
-  var h = '<div class="card"><div class="rtr"><b>' + esc(name) + '</b><span class="muted">' + o.n + ' measured</span></div>';
-  if (!o.n) return h + '<div class="rtn"><span class="muted">Nothing measured yet</span></div></div>';
+  var h = "<h2>" + esc(name) + " &middot; " + o.n + " measured</h2>";
+  if (!o.n) return h + gxg([gxr("Nothing measured yet", "", "", "muted")]);
   var hit = Math.round(100 * o.h / o.n), avg = o.sum / o.n;
-  h += '<div class="rtn"><span>Moved the way the score pointed</span><span>' + hit + '%</span></div>';
-  h += '<div class="rtn"><span>Average move in that direction</span><span class="' + (avg >= 0 ? "up" : "down") + '">' + (avg > 0 ? "+" : "") + avg.toFixed(2) + '%</span></div>';
-  return h + '</div>';
+  return h + gxg([
+    gxr("Moved the way the score pointed", "", hit + "%"),
+    gxr("Average move in that direction", "", (avg > 0 ? "+" : "") + avg.toFixed(2) + "%", avg >= 0 ? "up" : "down")
+  ]);
 }
 
 PAGES.performance = async function (el) {
@@ -43,11 +44,9 @@ PAGES.performance = async function (el) {
     h += pfRow(pfNames[0], B[0]) + pfRow(pfNames[1], B[1]) + pfRow(pfNames[2], B[2]);
     var days = Object.keys(D).sort().reverse();
     if (days.length) {
-      h += '<div class="card"><b>By score day</b>';
-      days.forEach(function (d) {
-        h += '<div class="rtn"><span>' + esc(d) + '</span><span>' + D[d].h + ' of ' + D[d].n + ' moved the right way</span></div>';
-      });
-      h += '</div>';
+      h += "<h2>By score day</h2>" + gxg(days.map(function (d) {
+        return gxr(esc(d), "", D[d].h + " of " + D[d].n + " moved the right way");
+      }));
     }
     if (tot < 100) h += '<p class="note">Only ' + tot + ' scores are measured so far. That is too few to read anything into. The record grows with every daily run.</p>';
     h += '<p class="note">Each score is measured from the close on its score day to the latest close. A hit rate near 50% is a coin flip. Neutral scores (under 10) are left out.</p>';
