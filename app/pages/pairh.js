@@ -12,10 +12,12 @@ function pkTxt(o) {
 
 function pkRow(label, b, q, ob, oq, tol, inv) {
   if (ob == null || oq == null) return gxr(esc(label), "", "n/a", "muted");
+  var sub = esc(b.t + " " + b.s + " · " + q.t + " " + q.s);
+  if (ob.lv !== oq.lv) return gxr(esc(label), sub, "Not comparable", "muted");
   var d = ob.v - oq.v;
-  if (Math.abs(d) < tol) return gxr(esc(label), esc(b.t + " " + b.s + " · " + q.t + " " + q.s), "Even", "muted");
+  if (Math.abs(d) < tol) return gxr(esc(label), sub, "Even", "muted");
   var win = (inv ? -d : d) > 0;
-  return gxr(esc(label), esc(b.t + " " + b.s + " · " + q.t + " " + q.s), win ? b.t + " ahead" : q.t + " ahead", win ? "up" : "down");
+  return gxr(esc(label), sub, win ? b.t + " ahead" : q.t + " ahead", win ? "up" : "down");
 }
 
 async function pkLoad(p) {
@@ -35,10 +37,10 @@ async function pkLoad(p) {
   });
   var rb = rt[b], rq = rt[q];
   if (rb != null && rq != null) {
-    a.push(pkRow("Policy rate", { t: b, s: rb + "%" }, { t: q, s: rq + "%" }, { v: rb }, { v: rq }, 0.1, 0));
+    a.push(pkRow("Policy rate", { t: b, s: rb + "%" }, { t: q, s: rq + "%" }, { v: rb, lv: 0 }, { v: rq, lv: 0 }, 0.1, 0));
   }
   return '<h2>Head to head</h2>' + gxg(a) +
-    '<p class="note">Green means ' + b + ' is ahead, red means ' + q + ' is ahead. Growth, sales, inflation and jobs compare the change since the previous release. Policy rate compares the level. Context only, not a forecast.</p>';
+    '<p class="note">Green means ' + b + ' is ahead, red means ' + q + ' is ahead. Growth, sales, inflation and jobs compare the change since the previous release. Policy rate compares the level. Rows where the two currencies are measured differently say Not comparable. Context only, not a forecast.</p>';
 }
 
 var pkBase = PAGES.pair;
