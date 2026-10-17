@@ -2,6 +2,7 @@ var mrItems = [
   ["weekly", "Weekly report", "Score changes, currency strength and upcoming events", "#0A84FF", "M4 7h16v13H4zM4 11h16M8 4v4M16 4v4", 0],
   ["sentiment", "Sentiment", "Where retail traders are positioned, read as a contrarian signal", "#FF9F0A", "M12 21a9 9 0 100-18 9 9 0 000 18zM8 14c1 2 7 2 8 0", 0],
   ["macro", "Macro", "Growth, retail sales, inflation and jobs for each currency", "#5E5CE6", "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3 3 15 0 18", 0],
+  ["technical", "Technical", "Trend, moving averages and volatility", "#FFD60A", "M4 16l4-4 3 3 5-6M4 20h16", 0],
   ["seasonality", "Seasonality", "Average return of each calendar month", "#30D158", "M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 100 8 4 4 0 000-8z", 0],
   ["performance", "Performance", "Stored scores compared with what price did next", "#BF5AF2", "M4 18l5-6 4 3 7-9", 1],
   ["weights", "Weights", "Try your own signal weights on this phone", "#64D2FF", "M4 7h16M4 12h16M4 17h16M9 5v4M15 10v4M8 15v4", 1],
