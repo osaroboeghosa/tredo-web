@@ -2,6 +2,7 @@ var mrItems = [
   ["weekly", "Weekly report", "Score changes, currency strength and upcoming events", "#0A84FF", "M4 7h16v13H4zM4 11h16M8 4v4M16 4v4", 0],
   ["sentiment", "Sentiment", "Where retail traders are positioned, read as a contrarian signal", "#FF9F0A", "M12 21a9 9 0 100-18 9 9 0 000 18zM8 14c1 2 7 2 8 0", 0],
   ["macro", "Macro", "Growth, retail sales, inflation and jobs for each currency", "#5E5CE6", "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3 3 15 0 18", 0],
+  ["heatmap", "Heatmap", "Economic readings of all 8 currencies side by side", "#FF9500", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z", 0],
   ["technical", "Technical", "Trend, moving averages and volatility", "#FFD60A", "M4 16l4-4 3 3 5-6M4 20h16", 0],
   ["usecon", "US economy", "Latest US releases against forecast", "#FF375F", "M5 20v-9M12 20V5M19 20v-7", 0],
   ["seasonality", "Seasonality", "Average return of each calendar month", "#30D158", "M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 100 8 4 4 0 000-8z", 0],
