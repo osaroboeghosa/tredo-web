@@ -61,7 +61,7 @@ PAGES.seasonality = async function (el) {
     var h = '<h1>Seasonality</h1><p class="muted sub">Average return of each calendar month, in percent. Current month is shaded.</p>';
     h += filtBar() + '<div id="res"></div>';
     h += '<p class="note">Seasonality is context only. It describes the past and is not a forecast.</p>';
-    h += '<p class="note">Teal bars are the 2-year average, grey bars the 5-year average.</p>';
+    h += '<p class="note">Blue bars are the 2-year average, grey bars the 5-year average.</p>';
     el.innerHTML = h;
     var res = el.querySelector("#res");
     var draw = function () {
