@@ -1,0 +1,7 @@
+.p2h{display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0 12px}
+.p2h .ring{width:112px;height:112px}
+.p2b{font-size:17px;font-weight:600}
+.p2l{width:100%;height:90px;display:block;margin:8px 0 4px}
+.tcs{display:flex;gap:12px}
+.tcs span{display:flex;flex-direction:column;align-items:center;font-size:11px;color:var(--muted)}
+.tcs b{font-size:15px;font-weight:600}
