@@ -14,19 +14,45 @@ function pairCard(x) {
     '<div class="sym">' + esc(x.pair) + '</div><div class="lab">' + esc(x.label) + '</div></a>';
 }
 
+function tsCl(v) { return v == null ? "muted" : v >= 15 ? "up" : v <= -15 ? "down" : "muted"; }
+
+function tsN(v) { return v == null ? "–" : (v > 0 ? "+" : "") + v; }
+
+function tsC(l, v) {
+  v = v == null ? null : Number(v);
+  return "<span>" + l + '<b class="' + tsCl(v) + '">' + tsN(v) + "</b></span>";
+}
+
+function tsRow(x) {
+  var f = Number(x.final), c = tsCl(f);
+  return '<a class="sr" href="#/pair/' + esc(x.pair) + '"><div class="sm"><div class="sn">' + esc(x.pair) + '</div><div class="sd2 ' + c + '">' + esc(x.bias) + "</div></div>" +
+    '<div class="tcs">' + tsC("T", x.technical) + tsC("S", x.sentiment) + tsC("F", x.fundamentals) + '</div><div class="sv ' + c + '">' + tsN(f) + '</div><span class="sch">&#8250;</span></a>';
+}
+
 PAGES.home = async function (el) {
   el.innerHTML = '<p class="muted">Loading...</p>';
   try {
-    var rows = await sb("scores_latest?select=pair,score,label&order=score.desc");
-    el.innerHTML = '<h1>Which pairs deserve attention</h1><p class="muted sub">Macro gives the bias. The chart gives the timing.</p>' + filtBar() + '<div id="res"></div>';
+    var d = await sb("scores_v2?select=as_of&order=as_of.desc&limit=1");
+    if (!d.length) { el.innerHTML = '<h1>Top Setups</h1><p class="muted">No scores yet.</p>'; return; }
+    var day = d[0].as_of;
+    var rows = await sb("scores_v2?select=pair,final,bias,technical,sentiment,fundamentals&as_of=eq." + day + "&order=final.desc&limit=100");
+    rows.sort(function (a, b) { return Math.abs(b.final) - Math.abs(a.final); });
+    var hide = false;
+    var h = '<h1>Top Setups</h1><p class="muted sub">Strongest scores first. As of ' + esc(day) + "</p>" + filtBar();
+    h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div></div>';
+    h += '<div id="res"></div>';
+    h += '<p class="note">T is Technical, S is Sentiment, F is Fundamentals. Each runs from -100 to +100, and the final score blends them. Scores rank where to look first. They are not forecasts.</p>';
+    el.innerHTML = h;
     var res = el.querySelector("#res");
     var draw = function () {
-      var f = rows.filter(function (x) { return filtMatch(x.pair); });
-      res.innerHTML = f.length ? '<div class="grid">' + f.map(pairCard).join("") + '</div>' : filtEmpty();
+      var f = rows.filter(function (x) { return filtMatch(x.pair) && (!hide || x.bias !== "Neutral"); });
+      res.innerHTML = f.length ? '<div class="sl">' + f.map(tsRow).join("") + "</div>" : filtEmpty();
     };
     filtWire(el, draw);
+    var b = el.querySelector("#hn");
+    b.onclick = function () { hide = !hide; b.className = "msw" + (hide ? " on" : ""); draw(); };
     draw();
   } catch (e) {
-    el.innerHTML = '<p class="down">Could not load scores: ' + esc(e.message) + '</p>';
+    el.innerHTML = '<p class="down">Could not load scores: ' + esc(e.message) + "</p>";
   }
 };
