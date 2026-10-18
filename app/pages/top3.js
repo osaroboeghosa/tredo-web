@@ -15,7 +15,7 @@ function t3v(x, k) {
 
 function t3row(x) {
   var f = Number(x.total), c = /Bull/.test(x.bias) ? "up" : /Bear/.test(x.bias) ? "down" : "muted";
-  var h = '<tr><td class="pr"><a href="#/pair/' + esc(x.pair) + '">' + esc(x.pair) + "</a><small>" + esc(x.bias) + "</small></td>";
+  var h = '<tr><td class="pr"><a href="#/scan/' + esc(x.pair) + '">' + esc(x.pair) + "</a><small>" + esc(x.bias) + "</small></td>";
   h += '<td class="sc ' + c + '">' + (f > 0 ? "+" : "") + f + "</td>";
   T3S.forEach(function (n) { h += t3c(x[n[0]]); });
   return h + "</tr>";
@@ -39,7 +39,7 @@ PAGES.home = async function (el) {
     var day = d[0].as_of;
     var cols = "pair,total,bias," + T3S.map(function (n) { return n[0]; }).join(",");
     var rows = await sb("scores_v3?select=" + cols + "&as_of=eq." + day + "&limit=100");
-    var h = '<h1>Top Setups</h1><p class="muted sub">Every signal behind every score. As of ' + esc(day) + ". Tap a heading to sort.</p>" + filtBar();
+    var h = '<h1>Top Setups</h1><p class="muted sub">Every signal behind every score. As of ' + esc(day) + ". Tap a heading to sort, tap a pair to open it.</p>" + filtBar();
     h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div></div><div id="res"></div>';
     h += '<p class="note">Each signal runs from -2 (red) to +2 (green). The score is the plain sum of all signals. Blank means no data for that pair. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
     el.innerHTML = h;
