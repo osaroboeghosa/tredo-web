@@ -10,7 +10,7 @@ PAGES.scan = async function (el, p) {
       sb("cot?select=currency,report_date,net,weekly_change,pct52&currency=eq." + b + "&order=report_date.desc&limit=1"),
       sb("cot?select=currency,report_date,net,weekly_change,pct52&currency=eq." + q + "&order=report_date.desc&limit=1"),
       sb("retail?select=long_pct&pair=eq." + p + "&order=as_of.desc&limit=1"),
-      sb("signals_latest?select=name,detail&pair=eq." + p + "&name=in.(GDP,CPI,Retail%20Sales,UE)"),
+      sb("signals_latest?select=name,detail&pair=eq." + p),
       sb("scores_v3?select=as_of,total&pair=eq." + p + "&order=as_of&limit=120")
     ]);
     if (!a[0].length) { el.innerHTML = "<h1>" + esc(p) + '</h1><p class="muted">No score yet.</p>'; return; }
