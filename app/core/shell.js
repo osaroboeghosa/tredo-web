@@ -25,7 +25,7 @@ function route() {
   var parts = (location.hash || "#/home").replace("#/", "").split("/");
   var name = parts[0] || "home";
   var arg = parts[1] || "";
-  var tab = name === "pair" ? "scores" : name;
+  var tab = name === "pair" ? "scores" : name === "scan" ? "home" : name;
   var isTab = TABS.some(function (t) { return t[0] === tab; });
   if (!isTab) tab = "more";
   document.getElementById("tabs").innerHTML = TABS.map(function (t) {
