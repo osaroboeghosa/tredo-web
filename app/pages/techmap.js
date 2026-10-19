@@ -7,21 +7,15 @@ function tmhC(t, k) {
   return '<td class="tm' + (k === 0 ? "z" : (k > 0 ? "u" : "d") + Math.abs(k)) + '">' + t + "</td>";
 }
 
-function tmhCnt(x) {
-  var n = 0, s = 0;
-  [x.sma20, x.sma50, x.sma100, x.sma200].forEach(function (f) { if (f != null) { s++; if (f === "Bullish") n++; } });
-  return s ? n : null;
-}
-
 function tmhVal(x, k) {
-  var t = tmhN(x.trend), s = tmhN(x.season10);
   if (k === "pair") return x.pair;
-  if (k === "trend") return t;
-  if (k === "season") return s;
-  if (k === "ma") return tmhCnt(x);
+  if (k === "trend") return tmhN(x.trend);
+  if (k === "season") return tmhN(x.season10);
   if (k === "m7") return tmhN(x.move7);
   if (k === "m90") return tmhN(x.move90);
-  return (t == null && s == null) ? null : Math.abs((t || 0) + (s || 0));
+  var t = tmsTot(x);
+  if (k === "score") return t;
+  return t == null ? null : Math.abs(t);
 }
 
 function tmhMv(v) { v = tmhN(v); return v == null ? '<td class="tmn">n/a</td>' : "<td>" + v.toFixed(2) + "%</td>"; }
@@ -34,7 +28,7 @@ function tmhVol(v) {
 function tmhRow(x) {
   var t = tmhN(x.trend), s = tmhN(x.season10);
   var h = '<tr><td class="tmk"><a href="#/scan/' + esc(x.pair) + '">' + esc(x.pair) + "</a></td>";
-  h += tmhC(tmhSg(t), t) + tmhC(tmhSg(s), s);
+  h += tmsCell(x) + tmhC(tmhSg(t), t) + tmhC(tmhSg(s), s);
   [x.sma20, x.sma50, x.sma100, x.sma200].forEach(function (f) {
     h += tmhC(f == null ? "" : (f === "Bullish" ? "Up" : "Down"), tmhMa(f));
   });
@@ -42,10 +36,11 @@ function tmhRow(x) {
 }
 
 function tmhHead() {
-  var c = [["pair", "Pair"], ["trend", "Trend"], ["season", "Season"], ["", "20"], ["", "50"], ["", "100"], ["", "200"], ["m7", "7d move"], ["m90", "90d move"], ["", "Vol"]];
+  var c = [["pair", "Pair"], ["score", "Score"], ["trend", "Trend"], ["season", "Season"], ["", "20"], ["", "50"], ["", "100"], ["", "200"], ["m7", "7d move"], ["m90", "90d move"], ["", "Vol"]];
   var h = "<tr>";
   c.forEach(function (x) {
-    var a = x[0] && TMH.key === x[0] ? (TMH.dir > 0 ? " &#9650;" : " &#9660;") : "";
+    var on = x[0] && (TMH.key === x[0] || (x[0] === "score" && TMH.key === "abs"));
+    var a = on ? (TMH.dir > 0 ? " &#9650;" : " &#9660;") : "";
     h += '<th data-k="' + x[0] + '">' + x[1] + a + "</th>";
   });
   return h + "</tr>";
@@ -67,7 +62,7 @@ PAGES.technical = async function (el) {
     });
     vb += "</div>";
     var h = '<h1>Technical</h1><p class="muted sub">As of ' + esc(day) + "</p>" + filtBar() + vb + '<div id="res"></div>';
-    h += '<p class="note">Trend and Season run from -2 to +2. The four average columns show whether price is above (Up, green) or below (Down, red) that many-day average. Moves are the average daily move in percent over 7 and 90 days. Volatility compares the two. Tap a heading to sort.</p>';
+    h += '<p class="note">Score is Trend plus Season, from -4 to +4. Trend and Season each run from -2 to +2. The four average columns show whether price is above (Up, green) or below (Down, red) that many-day average. Moves are the average daily move in percent over 7 and 90 days. Volatility compares the two. Tap a heading to sort.</p>';
     el.innerHTML = h;
     var res = el.querySelector("#res");
     var draw = function () {
