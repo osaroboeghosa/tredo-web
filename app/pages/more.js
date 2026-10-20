@@ -7,6 +7,7 @@ var mrItems = [
   ["technical", "Technical", "Trend, moving averages and volatility", "#FFD60A", "M4 16l4-4 3 3 5-6M4 20h16", 0],
   ["usecon", "US economy", "Latest US releases against forecast", "#FF375F", "M5 20v-9M12 20V5M19 20v-7", 0],
   ["usheat", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["seasonality", "Seasonality", "Average return of each calendar month", "#30D158", "M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 100 8 4 4 0 000-8z", 0],
   ["performance", "Performance", "Stored scores compared with what price did next", "#BF5AF2", "M4 18l5-6 4 3 7-9", 1],
   ["weights", "Weights", "Try your own signal weights on this phone", "#64D2FF", "M4 7h16M4 12h16M4 17h16M9 5v4M15 10v4M8 15v4", 1],
