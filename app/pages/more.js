@@ -10,6 +10,7 @@ var mrItems = [
   ["assets", "Asset Scorecard", "Macro readings for indices, oil, gold and silver", "#34C759", "M4 20V10M10 20V4M16 20v-8M22 20H2", 0],
   ["yieldcurve", "Yield curve", "US long-term minus short-term yield, red when inverted", "#32ADE6", "M4 17c4-8 8-8 16-10M4 20h16", 0],
   ["carry", "Carry Trade Scanner", "Pairs ranked by policy rate difference", "#AF52DE", "M4 8h13l-3-3M20 16H7l3 3", 0],
+  ["surprise", "Eco Surprise Index", "Share of Bullish readings per currency, ranked", "#FF2D55", "M5 20V9M12 20V4M19 20v-7", 0],
   ["econheat/USD", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/GBP", "UK Economic Heatmap", "Latest UK releases with sterling and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
