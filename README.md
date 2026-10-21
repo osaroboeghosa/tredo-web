@@ -42,3 +42,6 @@ Left from the first version (index.html, scores.html, pair.html, central-banks.h
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.
+- app/pages/carry.js: Carry Trade Scanner, pairs ranked by policy rate difference (reads central_banks).
+- app/pages/surprise.js: Eco Surprise Index, share of Bullish readings per currency, ranked (reads heat_state_v).
+- app/pages/updates.js: Data Updates Log, last update time of each dataset with a freshness dot (reads the latest date in each table).
