@@ -13,6 +13,7 @@ var mrItems = [
   ["surprise", "Eco Surprise Index", "Share of Bullish readings per currency, ranked", "#FF2D55", "M5 20V9M12 20V4M19 20v-7", 0],
   ["updates", "Data Updates Log", "When each dataset was last updated", "#8E8E93", "M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2", 0],
   ["ecostrength", "Eco Strength", "Policy rate, CPI and real yield, ranked", "#5AC8FA", "M4 20V8M10 20V4M16 20v-9M22 20H2", 0],
+  ["marketmap", "Market Heatmap", "1 day change of each currency pair, ranked", "#FF6482", "M4 20V14M9 20V8M14 20V11M19 20V5", 0],
   ["econheat/USD", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/GBP", "UK Economic Heatmap", "Latest UK releases with sterling and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
