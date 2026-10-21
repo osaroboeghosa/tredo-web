@@ -1,35 +1,44 @@
 # tredo-web
 
-Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS served by GitHub Pages. No framework, no build step.
+Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS on GitHub Pages. No framework, no build step. The live site is app/index.html.
 
-## Files
-- README.md: this file, one line per file, updated every phase.
-- index.html: Dashboard page, 7 pair cards (each opens its pair page) and the currency strength strip.
-- scores.html: Scores page, table of all pairs with the 9 signals.
-- pair.html: detail page for one pair, opened as pair.html?p=USDCAD.
-- central-banks.html: Central Banks page, 8 banks sorted by next meeting.
-- sentiment.html: Sentiment page, retail long/short per pair (page and script in one file).
-- cot.html: COT page, latest net positioning per currency (page and script in one file).
-- seasonality.html: Seasonality page, current month 2Y and 5Y averages per pair (page and script in one file).
-- whats-new.html: What's New page, change log.
-- upgrade.html: Upgrade placeholder, no payments yet.
-- tools.html: Tools page, lot size calculator.
-- css/tokens.css: colour, font and radius tokens (dark theme, teal accent).
-- css/app.css: shared layout, menu, card, badge and strength strip styles.
-- css/scores.css: table styles, also used by Sentiment, COT and Seasonality.
-- css/pair.css: styles for the pair page, signal rows, retail bar and tappable cards.
-- css/tools.css: styles for the Tools page and the lot size calculator.
-- js/api.js: Supabase read helper sb(path), holds the public URL and anon key.
-- js/nav.js: renders the shared menu and footer disclaimer on every page.
-- js/ui.js: small helpers for escaping text, score colours, tier names and number formats.
-- js/dashboard.js: loads scores_latest and currency_strength, draws the Dashboard.
-- js/scores.js: loads scores_latest and signals_latest, draws the Scores table.
-- js/pair.js: loads one pair from scores_latest and signals_latest, draws blocks, signals and retail bar.
-- js/cotchart.js: draws the 12-week COT net positioning bars for both currencies on the pair page.
-- js/banks.js: loads central_banks and draws the Central Banks cards.
-- js/tools.js: lot size calculator logic (risk amount, stop in pips, pair, price).
+## app/ (current site)
+- app/index.html: loads every css and script with ?v=N (bump all N after each change), script order matters, new pages go before core/shell.js.
+- app/settings.js: shared settings.
+- app/core/api.js: sb() Supabase read helper and esc() text escaper.
+- app/core/shell.js: router, header, bottom tabs (home, scores, flow, banks, more), footer disclaimer, "This page is being rebuilt." fallback.
+- app/pages/gx.js: gxr(label, sub, value, cls) row builder and gxg(rows) group builder.
+- app/pages/more.js: More page, mrItems list of links (Reports, Tools and info), dark mode switch.
+- app/pages/calendar.js: Calendar, releases by day with impact filter, forecast, previous and actual (actuals from release_actuals).
+- app/pages/weekly.js: Weekly report, score changes, strength, next 40 High events.
+- app/pages/sentiment.js: Sentiment, retail long/short per pair.
+- app/pages/macro.js: Macro, growth, retail sales, inflation, jobs per currency.
+- app/pages/heat.js: Heatmap of all currencies (old, do not overwrite).
+- app/pages/usheat.js: US heatmap (old, do not overwrite).
+- app/pages/econheat.js: Economic Heatmap per currency (econheat/USD etc.), reads heat_state_v.
+- app/pages/groupscfg.js and groups.js: Groups, one heatmap per signal group.
+- app/pages/techcfg.js, techmap.js, techscore.js, tech.js: Technical pages (trend, averages, volatility).
+- app/pages/econcfg.js and usecon.js: US economy page, latest releases against forecast.
+- app/pages/assets.js: Asset Scorecard, indices, oil, gold, silver.
+- app/pages/season.js: Seasonality, average return per month.
+- app/pages/perf.js: Performance, stored scores against later price moves.
+- app/pages/wts.js: Weights, try your own signal weights.
+- app/pages/acc.js: "How accurate is this?" page.
+- app/pages/tools.js: Tools, lot size calculator.
+- app/pages/banks.js: Central banks.
+- app/pages/flow.js and filter.js: Flow tab and its filter.
+- app/pages/home.js, scores.js, scores3.js, scorescfg.js, ts2.js, top3.js: Home and Scores tabs.
+- app/pages/scan.js, scan2.js, scan3.js, scan4.js: scan blocks used by the Scores tab.
+- app/pages/pair.js, pair2.js, pairx.js, pairy.js, pairz.js, pairw.js, pairv.js, pairu.js, pairt.js, pairm.js, pairh.js: pair page and its blocks.
+- app/css/tokens.css: colour, font and radius tokens (dark default, light mode, teal accent).
+- app/css/app.css: shared layout, tab bar, cards.
+- app/css/scores.css, pair.css, filter.css, flow.css, sent.css, macro.css, banks.css, season.css, tools.css, econ.css, groups.css, techmap.css: styles for the page of the same name.
+- app/css/polish.css to polish16.css: later style fixes, loaded in numeric order.
+
+## Older files at repo root
+Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
-- Only public keys (Supabase URL and publishable key) are ever used here.
-- The site is to be rebuilt from scratch (modular, one settings file); this list will change then.
+- Only public keys (Supabase URL and publishable key) are used here.
+- The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.
