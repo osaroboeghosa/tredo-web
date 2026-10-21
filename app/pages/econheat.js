@@ -1,6 +1,6 @@
 var HZC = {Bullish: "#2f5bea", Bearish: "#e5534b", Neutral: "#4b5563"};
 var HZS = {Bullish: "Bull", Bearish: "Bear", Neutral: "Neut"};
-var HZN = {EUR: "EU", GBP: "UK", JPY: "JP", CAD: "CA", AUD: "AU", NZD: "NZ", CHF: "CH", CNY: "CN"};
+var HZN = {USD: "US", EUR: "EU", GBP: "UK", JPY: "JP", CAD: "CA", AUD: "AU", NZD: "NZ", CHF: "CH", CNY: "CN"};
 var HZP = "padding:7px 4px;white-space:nowrap";
 
 function hzChip(v) {
@@ -9,9 +9,18 @@ function hzChip(v) {
   return '<span style="display:inline-block;min-width:38px;padding:2px 6px;border-radius:6px;background:' + c + ';color:#fff;font-size:11px;text-align:center">' + esc(HZS[k] || "Neut") + "</span>";
 }
 
-function hzNum(v, d) {
+function hzNum(v) {
   if (v == null) return "n/a";
-  return Number(v).toFixed(d);
+  return String(parseFloat(Number(v).toFixed(2)));
+}
+
+function hzPct(rows, key) {
+  var b = 0, r = 0;
+  rows.forEach(function (x) {
+    if (x[key] === "Bullish") b++;
+    if (x[key] === "Bearish") r++;
+  });
+  return b + r ? (100 * b) / (b + r) : null;
 }
 
 function hzGauge(label, pct) {
@@ -30,14 +39,12 @@ PAGES.econheat = async function (el, arg) {
   el.innerHTML = '<p class="muted">Loading...</p>';
   try {
     var q = "&currency=eq." + encodeURIComponent(cur);
-    var rows = await sb("heat_latest_v?select=row_order,a1_name,release_ts,actual,forecast,previous,surprise,ccy_impact,stocks_impact" + q + "&order=row_order.asc");
-    var g = await sb("heat_gauge_v?select=ccy_pct,stocks_pct,rows_used" + q);
-    var gg = g.length ? g[0] : {};
+    var rows = await sb("heat_state_v?select=row_order,a1_name,release_date,actual,forecast,previous,surprise,ccy_impact,stocks_impact" + q + "&order=row_order.asc");
     var h = "<h1>" + esc(nm) + " Economic Heatmap</h1>";
     h += '<p class="muted sub">Latest release of each indicator: actual against forecast, and what it means for the currency and for stocks.</p>';
-    h += '<div style="display:flex;gap:10px;margin:12px 0">' + hzGauge(cur + " impact", gg.ccy_pct) + hzGauge("Stocks impact", gg.stocks_pct) + "</div>";
+    h += '<div style="display:flex;gap:10px;margin:12px 0">' + hzGauge(cur + " impact", hzPct(rows, "ccy_impact")) + hzGauge("Stocks impact", hzPct(rows, "stocks_impact")) + "</div>";
     if (!rows.length) {
-      h += '<p class="muted">No releases with both an actual and a forecast yet.</p>';
+      h += '<p class="muted">No data for this currency yet.</p>';
     } else {
       var th = function (t) { return '<th style="' + HZP + '">' + t + "</th>"; };
       var td = function (t) { return '<td style="' + HZP + '">' + t + "</td>"; };
@@ -45,13 +52,14 @@ PAGES.econheat = async function (el, arg) {
       h += '<tr style="text-align:left;opacity:.7">' + th("Economic data") + th("Date") + th("Surp.") + th("Actual") + th("Fcst") + th("Prev") + th(esc(cur)) + th("Stocks") + "</tr>";
       rows.forEach(function (x) {
         var c = HZC[x.ccy_impact] || HZC.Neutral;
+        var d = x.release_date ? String(x.release_date).slice(5, 10) : "n/a";
         h += '<tr style="border-top:1px solid #374151">';
         h += '<td style="padding:7px 4px;min-width:84px">' + esc(x.a1_name) + "</td>";
-        h += td(esc(String(x.release_ts).slice(5, 10)));
-        h += td('<span style="padding:2px 6px;border-radius:6px;background:' + c + ';color:#fff">' + hzNum(x.surprise, 2) + "</span>");
-        h += td(hzNum(x.actual, 1));
-        h += td(hzNum(x.forecast, 1));
-        h += td(hzNum(x.previous, 1));
+        h += td(esc(d));
+        h += td('<span style="padding:2px 6px;border-radius:6px;background:' + c + ';color:#fff">' + hzNum(x.surprise) + "</span>");
+        h += td(hzNum(x.actual));
+        h += td(hzNum(x.forecast));
+        h += td(hzNum(x.previous));
         h += td(hzChip(x.ccy_impact));
         h += td(hzChip(x.stocks_impact)) + "</tr>";
       });
