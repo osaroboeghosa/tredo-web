@@ -36,6 +36,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 - app/pages/updates.js: Data Updates Log, last update time of each dataset with a freshness dot (reads the latest date in each table).
 - app/pages/ecostrength.js: Eco Strength, 8 majors ranked by real yield, policy rate minus latest CPI (reads central_banks and heat_state_v).
 - app/pages/marketmap.js: Market Heatmap, 1 day change of each of the 28 currency pairs as tiles and ranked bars (reads prices).
+- app/pages/creditspread.js: Credit Spreads, US high-yield spread with 1 day, 1 week and 1 month change, range stats and a 6M/1Y/3Y line chart (reads raw_values, series US_HY_SPREAD).
 - app/css/tokens.css: colour, font and radius tokens (dark default, light mode, teal accent).
 - app/css/app.css: shared layout, tab bar, cards.
 - app/css/scores.css, pair.css, filter.css, flow.css, sent.css, macro.css, banks.css, season.css, tools.css, econ.css, groups.css, techmap.css: styles for the page of the same name.
@@ -45,7 +46,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
-- Web is now at ?v=81.
+- Web is now at ?v=82.
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.
