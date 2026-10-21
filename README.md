@@ -30,6 +30,11 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 - app/pages/home.js, scores.js, scores3.js, scorescfg.js, ts2.js, top3.js: Home and Scores tabs.
 - app/pages/scan.js, scan2.js, scan3.js, scan4.js: scan blocks used by the Scores tab.
 - app/pages/pair.js, pair2.js, pairx.js, pairy.js, pairz.js, pairw.js, pairv.js, pairu.js, pairt.js, pairm.js, pairh.js: pair page and its blocks.
+- app/pages/yieldcurve.js: Yield curve, daily chart of the US yield curve (reads raw_values, names no maturities).
+- app/pages/carry.js: Carry Trade Scanner, pairs ranked by policy rate difference (reads central_banks).
+- app/pages/surprise.js: Eco Surprise Index, share of Bullish readings per currency, ranked, Currency/Stocks toggle (reads heat_state_v).
+- app/pages/updates.js: Data Updates Log, last update time of each dataset with a freshness dot (reads the latest date in each table).
+- app/pages/ecostrength.js: Eco Strength, 8 majors ranked by real yield, policy rate minus latest CPI (reads central_banks and heat_state_v).
 - app/css/tokens.css: colour, font and radius tokens (dark default, light mode, teal accent).
 - app/css/app.css: shared layout, tab bar, cards.
 - app/css/scores.css, pair.css, filter.css, flow.css, sent.css, macro.css, banks.css, season.css, tools.css, econ.css, groups.css, techmap.css: styles for the page of the same name.
@@ -39,9 +44,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
+- Web is now at ?v=80.
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.
-- app/pages/carry.js: Carry Trade Scanner, pairs ranked by policy rate difference (reads central_banks).
-- app/pages/surprise.js: Eco Surprise Index, share of Bullish readings per currency, ranked (reads heat_state_v).
-- app/pages/updates.js: Data Updates Log, last update time of each dataset with a freshness dot (reads the latest date in each table).
