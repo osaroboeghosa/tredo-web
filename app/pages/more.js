@@ -6,6 +6,7 @@ var mrItems = [
   ["groups", "Groups", "One heatmap each for growth, inflation, jobs, positioning and crowd", "#00C7BE", "M4 5h16v4H4zM4 11h16v4H4zM4 17h16v3H4z", 0],
   ["technical", "Technical", "Trend, moving averages and volatility", "#FFD60A", "M4 16l4-4 3 3 5-6M4 20h16", 0],
   ["usecon", "US economy", "Latest US releases against forecast", "#FF375F", "M5 20v-9M12 20V5M19 20v-7", 0],
+  ["assets", "Asset Scorecard", "Macro readings for indices, oil, gold and silver", "#34C759", "M4 20V10M10 20V4M16 20v-8M22 20H2", 0],
   ["econheat/USD", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
   ["econheat/GBP", "UK Economic Heatmap", "Latest UK releases with sterling and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
