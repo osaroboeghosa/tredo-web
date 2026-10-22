@@ -1,105 +1,102 @@
-function s3g(v, key) {
-  if (v == null) return '<td class="na"></td>';
-  var n = Math.round(Number(v)), r = Math.abs(n) / S3CFG.max[key];
-  var l = r >= S3CFG.strong ? 2 : (r >= S3CFG.mild ? 1 : 0);
-  var k = l === 0 ? "hz0" : (n > 0 ? "hp" : "hn") + l;
-  return '<td class="' + k + '">' + (n > 0 ? "+" : "") + n + "</td>";
-}
-
-var s3m = false;
-
-function s3lab(m) {
-  if (m == null) return "";
-  m = Number(m);
-  return m >= 7 ? "Very Bullish" : m >= 4 ? "Bullish" : m >= -3 ? "Neutral" : m >= -6 ? "Bearish" : "Very Bearish";
-}
-
-function s3v(x, k) {
-  if (k === "abs") return (s3m || x.asset != null) ? (x.macro == null ? -99 : Math.abs(Number(x.macro))) : Math.abs(Number(x.total));
-  return x[k] == null ? -99 : Number(x[k]);
-}
-
-function s3row(x) {
-  var isA = x.asset != null;
-  var nm = isA ? x.asset : x.pair;
-  var um = s3m || isA;
-  var lab = um ? s3lab(x.macro) : x.bias;
-  var f = um ? Number(x.macro) : Number(x.total);
-  var c = /Bull/.test(lab) ? "up" : /Bear/.test(lab) ? "down" : "muted";
-  var h = "<tr><td class=\"pr\">" + (isA ? esc(nm) : '<a href="#/scan/' + esc(nm) + '">' + esc(nm) + "</a>") + "<small>" + esc(lab) + "</small></td>";
-  h += '<td class="sc ' + c + '">' + (f > 0 ? "+" : "") + f + "</td>";
-  S3G.forEach(function (g) {
-    h += isA && (g[0] === "technical" || g[0] === "sentiment") ? '<td class="na"></td>' : s3g(x[g[0]], g[0]);
-  });
-  T3S.forEach(function (n) { h += isA ? '<td class="na"></td>' : t3c(x[n[0]]); });
-  return h + "</tr>";
-}
-
-function s3tab(f) {
-  var h = '<div class="tw"><table class="ht"><thead><tr><th class="gh" colspan="2">Output</th><th class="gh" colspan="6">Group totals</th><th class="gh" colspan="15">Signals</th></tr><tr><th></th>';
-  [["abs", "Score"]].concat(S3G, T3S).forEach(function (c) {
-    h += '<th class="t2h" data-k="' + c[0] + '">' + c[1] + (s3k === c[0] ? (s3d < 0 ? " &#9660;" : " &#9650;") : "") + "</th>";
-  });
-  return h + "</tr></thead><tbody>" + f.map(s3row).join("") + "</tbody></table></div>";
-}
-
-PAGES.scores = async function (el) {
-  el.innerHTML = '<p class="muted">Loading...</p>';
-  try {
-    var d = await sb("scores_v3?select=as_of&order=as_of.desc&limit=1");
-    if (!d.length) { el.innerHTML = '<h1>Scores</h1><p class="muted">No scores yet.</p>'; return; }
-    var day = d[0].as_of;
-    var cols = "pair,total,bias," + S3G.map(function (g) { return g[0]; }).concat(T3S.map(function (n) { return n[0]; })).join(",");
-    var rows = await sb("scores_v3?select=" + cols + "&as_of=eq." + day + "&limit=100");
-    var assets = [], aday = "";
-    try {
-      var ar = await sb("asset_scores?select=asset,as_of,growth,inflation,jobs,macro&order=as_of.desc&limit=20");
-      if (ar.length) {
-        aday = ar[0].as_of;
-        assets = ar.filter(function (x) { return x.as_of === aday; });
-      }
-    } catch (e2) { assets = []; }
-    var h = '<h1>Scores</h1><p class="muted sub">Group totals and every signal behind them. As of ' + esc(day) + ". Tap a heading to sort.</p>" + filtBar();
-    h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div>';
-    h += '<div class="gr"><span class="gl">Macro only</span><span class="gs">Ranks by Growth + Inflation + Jobs and adds assets</span><button class="msw" id="mo" aria-label="Macro only"><i></i></button></div></div><div id="res"></div>';
-    h += '<p class="note">Each signal runs from -2 (red) to +2 (green). A group total is the sum of its signals, coloured by its share of the most it could reach. Macro is Growth plus Inflation plus Jobs. Blank means no data. In Macro only, the label comes from the macro score alone (7 or more Very Bullish, 4 to 6 Bullish, -3 to 3 Neutral, -4 to -6 Bearish, -7 or lower Very Bearish). Assets always use the macro score and label, show group totals only, and appear when the filter is All. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
-    el.innerHTML = h;
-    var res = el.querySelector("#res");
-    var draw = function () {
-      var base = rows.concat(assets);
-      var f = base.filter(function (x) {
-        var nm = x.asset != null ? x.asset : x.pair;
-        var ok = x.asset != null
-          ? (FILT.mode === "all" && (!FILT.q || String(nm).toUpperCase().indexOf(FILT.q.toUpperCase()) !== -1))
-          : filtMatch(nm);
-        var lab = (s3m || x.asset != null) ? s3lab(x.macro) : x.bias;
-        return ok && (!s3h || lab !== "Neutral");
-      });
-      f.sort(function (a, b) { return (s3v(b, s3k) - s3v(a, s3k)) * (s3d < 0 ? 1 : -1); });
-      res.innerHTML = f.length ? s3tab(f) : filtEmpty();
-    };
-    res.addEventListener("click", function (e) {
-      var t = e.target.closest(".t2h");
-      if (!t) return;
-      var k = t.getAttribute("data-k");
-      if (k === s3k) s3d = -s3d; else { s3k = k; s3d = -1; }
-      draw();
-    });
-    filtWire(el, draw);
-    var b = el.querySelector("#hn");
-    b.className = "msw" + (s3h ? " on" : "");
-    b.onclick = function () { s3h = !s3h; b.className = "msw" + (s3h ? " on" : ""); draw(); };
-    var m = el.querySelector("#mo");
-    m.className = "msw" + (s3m ? " on" : "");
-    m.onclick = function () {
-      s3m = !s3m;
-      s3k = s3m ? "macro" : "abs";
-      s3d = -1;
-      m.className = "msw" + (s3m ? " on" : "");
-      draw();
-    };
-    draw();
-  } catch (e) {
-    el.innerHTML = '<p class="down">Could not load scores: ' + esc(e.message) + "</p>";
-  }
-};
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tredo</title>
+<link rel="stylesheet" href="css/tokens.css?v=86">
+<link rel="stylesheet" href="css/app.css?v=86">
+<link rel="stylesheet" href="css/scores.css?v=86">
+<link rel="stylesheet" href="css/pair.css?v=86">
+<link rel="stylesheet" href="css/filter.css?v=86">
+<link rel="stylesheet" href="css/flow.css?v=86">
+<link rel="stylesheet" href="css/sent.css?v=86">
+<link rel="stylesheet" href="css/macro.css?v=86">
+<link rel="stylesheet" href="css/banks.css?v=86">
+<link rel="stylesheet" href="css/season.css?v=86">
+<link rel="stylesheet" href="css/tools.css?v=86">
+<link rel="stylesheet" href="css/polish.css?v=86">
+<link rel="stylesheet" href="css/polish2.css?v=86">
+<link rel="stylesheet" href="css/polish3.css?v=86">
+<link rel="stylesheet" href="css/polish4.css?v=86">
+<link rel="stylesheet" href="css/polish5.css?v=86">
+<link rel="stylesheet" href="css/polish6.css?v=86">
+<link rel="stylesheet" href="css/polish7.css?v=86">
+<link rel="stylesheet" href="css/polish8.css?v=86">
+<link rel="stylesheet" href="css/polish9.css?v=86">
+<link rel="stylesheet" href="css/polish10.css?v=86">
+<link rel="stylesheet" href="css/polish11.css?v=86">
+<link rel="stylesheet" href="css/polish12.css?v=86">
+<link rel="stylesheet" href="css/polish13.css?v=86">
+<link rel="stylesheet" href="css/polish14.css?v=86">
+<link rel="stylesheet" href="css/polish15.css?v=86">
+<link rel="stylesheet" href="css/polish16.css?v=86">
+<link rel="stylesheet" href="css/econ.css?v=86">
+<link rel="stylesheet" href="css/groups.css?v=86">
+<link rel="stylesheet" href="css/techmap.css?v=86">
+</head>
+<body>
+<header id="top"></header>
+<main id="view"></main>
+<footer id="foot"></footer>
+<nav id="tabs"></nav>
+<script src="settings.js?v=86"></script>
+<script src="core/api.js?v=86"></script>
+<script src="pages/gx.js?v=86"></script>
+<script src="pages/filter.js?v=86"></script>
+<script src="pages/flow.js?v=86"></script>
+<script src="pages/sentiment.js?v=86"></script>
+<script src="pages/macro.js?v=86"></script>
+<script src="pages/banks.js?v=86"></script>
+<script src="pages/season.js?v=86"></script>
+<script src="pages/perf.js?v=86"></script>
+<script src="pages/acc.js?v=86"></script>
+<script src="pages/tools.js?v=86"></script>
+<script src="pages/weekly.js?v=86"></script>
+<script src="pages/more.js?v=86"></script>
+<script src="pages/wts.js?v=86"></script>
+<script src="pages/tech.js?v=86"></script>
+<script src="pages/econcfg.js?v=86"></script>
+<script src="pages/usecon.js?v=86"></script>
+<script src="pages/heat.js?v=86"></script>
+<script src="pages/groupscfg.js?v=86"></script>
+<script src="pages/groups.js?v=86"></script>
+<script src="pages/techcfg.js?v=86"></script>
+<script src="pages/techmap.js?v=86"></script>
+<script src="pages/techscore.js?v=86"></script>
+<script src="pages/home.js?v=86"></script>
+<script src="pages/scores.js?v=86"></script>
+<script src="pages/ts2.js?v=86"></script>
+<script src="pages/top3.js?v=86"></script>
+<script src="pages/scorescfg.js?v=86"></script>
+<script src="pages/scores3.js?v=86"></script>
+<script src="pages/scan.js?v=86"></script>
+<script src="pages/scan2.js?v=86"></script>
+<script src="pages/scan3.js?v=86"></script>
+<script src="pages/scan4.js?v=86"></script>
+<script src="pages/pairx.js?v=86"></script>
+<script src="pages/pair.js?v=86"></script>
+<script src="pages/pairy.js?v=86"></script>
+<script src="pages/pairz.js?v=86"></script>
+<script src="pages/pairw.js?v=86"></script>
+<script src="pages/pairv.js?v=86"></script>
+<script src="pages/pairu.js?v=86"></script>
+<script src="pages/pairt.js?v=86"></script>
+<script src="pages/pairm.js?v=86"></script>
+<script src="pages/pairh.js?v=86"></script>
+<script src="pages/pair2.js?v=86"></script>
+<script src="pages/usheat.js?v=86"></script>
+<script src="pages/econheat.js?v=86"></script>
+<script src="pages/assets.js?v=86"></script>
+<script src="pages/calendar.js?v=86"></script>
+<script src="pages/yieldcurve.js?v=86"></script>
+<script src="pages/carry.js?v=86"></script>
+<script src="pages/surprise.js?v=86"></script>
+<script src="pages/updates.js?v=86"></script>
+<script src="pages/ecostrength.js?v=86"></script>
+<script src="pages/marketmap.js?v=86"></script>
+<script src="pages/creditspread.js?v=86"></script>
+<script src="pages/realyield.js?v=86"></script>
+<script src="core/shell.js?v=86"></script>
+</body>
+</html>
