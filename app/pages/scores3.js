@@ -29,9 +29,9 @@ function s3row(x) {
   var h = "<tr><td class=\"pr\">" + (isA ? esc(nm) : '<a href="#/scan/' + esc(nm) + '">' + esc(nm) + "</a>") + "<small>" + esc(lab) + "</small></td>";
   h += '<td class="sc ' + c + '">' + (f > 0 ? "+" : "") + f + "</td>";
   S3G.forEach(function (g) {
-    h += isA && (g[0] === "technical" || g[0] === "sentiment") ? '<td class="na"></td>' : s3g(x[g[0]], g[0]);
+    h += s3g(x[g[0]], g[0]);
   });
-  T3S.forEach(function (n) { h += isA ? '<td class="na"></td>' : t3c(x[n[0]]); });
+  T3S.forEach(function (n) { h += x[n[0]] == null ? '<td class="na"></td>' : t3c(x[n[0]]); });
   return h + "</tr>";
 }
 
@@ -53,7 +53,7 @@ PAGES.scores = async function (el) {
     var rows = await sb("scores_v3?select=" + cols + "&as_of=eq." + day + "&limit=100");
     var assets = [], aday = "";
     try {
-      var ar = await sb("asset_scores?select=asset,as_of,growth,inflation,jobs,macro&order=as_of.desc&limit=20");
+      var ar = await sb("asset_scores?select=asset,as_of,growth,inflation,jobs,macro,technical,sentiment,trend,season,cot,crowd,gdp,mpmi,spmi,retail_sales,consumer,cpi,rates,ppi,pce,unemp,nfp,claims,adp,jolts&order=as_of.desc&limit=20");
       if (ar.length) {
         aday = ar[0].as_of;
         assets = ar.filter(function (x) { return x.as_of === aday; });
@@ -62,7 +62,7 @@ PAGES.scores = async function (el) {
     var h = '<h1>Scores</h1><p class="muted sub">Group totals and every signal behind them. As of ' + esc(day) + ". Tap a heading to sort.</p>" + filtBar();
     h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div>';
     h += '<div class="gr"><span class="gl">Macro only</span><span class="gs">Ranks by Growth + Inflation + Jobs and adds assets</span><button class="msw" id="mo" aria-label="Macro only"><i></i></button></div></div><div id="res"></div>';
-    h += '<p class="note">Each signal runs from -2 (red) to +2 (green). A group total is the sum of its signals, coloured by its share of the most it could reach. Macro is Growth plus Inflation plus Jobs. Blank means no data. In Macro only, the label comes from the macro score alone (7 or more Very Bullish, 4 to 6 Bullish, -3 to 3 Neutral, -4 to -6 Bearish, -7 or lower Very Bearish). Assets always use the macro score and label, show group totals only, and appear when the filter is All. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
+    h += '<p class="note">Each signal runs from -2 (red) to +2 (green). A group total is the sum of its signals, coloured by its share of the most it could reach. Macro is Growth plus Inflation plus Jobs. Blank means no data. In Macro only, the label comes from the macro score alone (7 or more Very Bullish, 4 to 6 Bullish, -3 to 3 Neutral, -4 to -6 Bearish, -7 or lower Very Bearish). Assets always use the macro score and label, show the signals we hold, and appear when the filter is All. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
     el.innerHTML = h;
     var res = el.querySelector("#res");
     var draw = function () {
