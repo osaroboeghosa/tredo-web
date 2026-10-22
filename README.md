@@ -26,8 +26,10 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 - app/pages/acc.js: "How accurate is this?" page.
 - app/pages/tools.js: Tools, lot size calculator.
 - app/pages/banks.js: Central banks.
-- app/pages/flow.js and filter.js: Flow tab and its filter.
-- app/pages/home.js, scores.js, scores3.js, scorescfg.js, ts2.js, top3.js: Home and Scores tabs.
+- app/pages/flow.js and filter.js: Flow tab and its filter (filter.js matches pair names only; the Scores tab handles assets itself).
+- app/pages/home.js, scores.js, ts2.js, top3.js: Home and Scores tabs.
+- app/pages/scorescfg.js: Scores tab settings (S3CFG, S3G group columns, sort state).
+- app/pages/scores3.js: Scores tab table of every signal and group total, with Hide Neutral and a Macro only switch (sorts by macro, labels from macro score, adds the 5 assets from asset_scores as group-total rows).
 - app/pages/scan.js, scan2.js, scan3.js, scan4.js: scan blocks used by the Scores tab.
 - app/pages/pair.js, pair2.js, pairx.js, pairy.js, pairz.js, pairw.js, pairv.js, pairu.js, pairt.js, pairm.js, pairh.js: pair page and its blocks.
 - app/pages/yieldcurve.js: Yield curve, daily chart of the US yield curve (reads raw_values, names no maturities).
@@ -47,7 +49,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
-- Web is now at ?v=83.
+- Web is now at ?v=84.
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.
