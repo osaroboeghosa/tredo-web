@@ -17,10 +17,10 @@ PAGES.yieldcurve = async function (el) {
     var Y = function (v) { return T + (H - T - B) * (hi - v) / (hi - lo); };
     var d = p.map(function (x, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x.v).toFixed(1); }).join("");
     var z = Y(0);
-    var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto">';
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" class="chart">';
     s += '<defs><clipPath id="yca"><rect x="0" y="0" width="' + W + '" height="' + z + '"/></clipPath><clipPath id="ycb"><rect x="0" y="' + z + '" width="' + W + '" height="' + H + '"/></clipPath></defs>';
     s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + z + '" y2="' + z + '" stroke="#FF453A" stroke-dasharray="4 3"/>';
-    s += '<path d="' + d + '" fill="none" stroke="#14b8a6" stroke-width="1.6" clip-path="url(#yca)"/>';
+    s += '<path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="1.6" clip-path="url(#yca)"/>';
     s += '<path d="' + d + '" fill="none" stroke="#FF453A" stroke-width="1.6" clip-path="url(#ycb)"/>';
     var t = 'fill="currentColor" opacity="0.6" font-size="10"';
     s += '<text x="2" y="' + (T + 8) + '" ' + t + ">" + hi.toFixed(1) + "</text>";
@@ -33,10 +33,10 @@ PAGES.yieldcurve = async function (el) {
     var inv = p.filter(function (x) { return x.v < 0; }).length;
     var h = "<h1>Yield curve</h1>";
     h += '<p class="muted sub">US long-term minus short-term yield, daily. Red means inverted (below zero).</p>';
-    h += '<div style="display:flex;gap:8px;margin:8px 0 14px">';
+    h += '<div class="fbar">';
     Object.keys(ycD).forEach(function (k) {
       var on = k === ycK;
-      h += '<button data-k="' + k + '" style="border:1px solid #14b8a6;background:' + (on ? "#14b8a6" : "transparent") + ";color:" + (on ? "#fff" : "#14b8a6") + ';border-radius:16px;padding:6px 14px;font-size:14px">' + k + "</button>";
+      h += '<button class="fbtn' + (on ? " on" : "") + '" data-k="' + k + '">' + k + "</button>";
     });
     h += "</div>" + s;
     h += "<h2>Summary</h2>" + gxg([

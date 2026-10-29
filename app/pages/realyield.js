@@ -46,7 +46,7 @@ PAGES.realyield = async function (el) {
       var X = function (m) { return L + (W - L - R) * ms.indexOf(m) / (ms.length - 1); };
       var Y = function (v) { return T + (H - T - B) * (hi - v) / (hi - lo); };
       var t = 'fill="currentColor" opacity="0.6" font-size="10"';
-      var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto">';
+      var s = '<svg viewBox="0 0 ' + W + " " + H + '" class="chart">';
       s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="#8e8e93" stroke-dasharray="4 3"/>';
       S.forEach(function (q) {
         if (q.pts.length < 2) return;
@@ -60,14 +60,14 @@ PAGES.realyield = async function (el) {
       s += '<text x="' + (W - R) + '" y="' + (H - 4) + '" text-anchor="end" ' + t + ">" + ms[ms.length - 1] + "</text></svg>";
       var h = "<h1>Real Yield History</h1>";
       h += '<p class="muted sub">2 year yield minus the latest known yearly inflation, month by month. Above zero means yields beat inflation.</p>';
-      h += '<div style="display:flex;gap:8px;margin:8px 0 10px">';
+      h += '<div class="fbar">';
       Object.keys(ryD).forEach(function (k) {
         var on = k === ryK;
-        h += '<button data-k="' + k + '" style="border:1px solid #14b8a6;background:' + (on ? "#14b8a6" : "transparent") + ";color:" + (on ? "#fff" : "#14b8a6") + ';border-radius:16px;padding:6px 14px;font-size:14px">' + k + "</button>";
+        h += '<button class="fbtn' + (on ? " on" : "") + '" data-k="' + k + '">' + k + "</button>";
       });
       h += "</div>";
-      h += '<div style="display:flex;gap:14px;margin:0 0 6px;font-size:13px">';
-      S.forEach(function (q) { h += '<span><i style="display:inline-block;width:10px;height:10px;border-radius:5px;background:' + q.col + ';margin-right:5px"></i>' + q.n + "</span>"; });
+      h += '<div class="legend">';
+      S.forEach(function (q) { h += '<span><i style="--c:' + q.col + '"></i>' + q.n + "</span>"; });
       h += "</div>" + s + "<h2>Latest</h2>";
       var rows = [];
       S.forEach(function (q) {

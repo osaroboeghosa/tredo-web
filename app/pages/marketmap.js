@@ -18,26 +18,32 @@ PAGES.marketmap = async function (el) {
     });
     L.sort(function (a, b) { return b.pc - a.pc; });
     var mx = Math.max.apply(null, L.map(function (x) { return Math.abs(x.pc); })) || 1;
-    var col = function (v) { return v > 0.005 ? "#34c759" : v < -0.005 ? "#e5534b" : "#8e8e93"; };
+    var cls = function (v) { return v > 0.005 ? "pos" : v < -0.005 ? "neg" : "neu"; };
     var sg = function (v) { return v > 0 ? "+" : ""; };
-    var h = '<h1>Market Heatmap</h1><p class="muted sub">1 day change of each currency pair' + (day ? ", latest close " + esc(day) : "") + ".</p>";
+
+    var h = '<div class="pagehead"><div><div class="kicker">Live market</div><h1>Market Heatmap</h1></div>' +
+      '<span class="asof">' + (day ? esc(day) : "No data") + "</span></div>";
+    h += '<p class="muted sub">1 day change of each currency pair' + (day ? ", latest close " + esc(day) : "") + ".</p>";
     if (!L.length) { el.innerHTML = h + '<p class="muted">No price data yet.</p>'; return; }
-    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0">';
+
+    h += '<div class="tilegrid">';
     L.forEach(function (x) {
-      var k = col(x.pc), d = x.p.slice(3) === "JPY" ? 3 : 4;
-      h += '<div style="border:1px solid #374151;border-left:4px solid ' + k + ';border-radius:10px;padding:8px 10px">' +
-        '<div style="font-size:12px;opacity:.7">' + esc(x.p) + '</div>' +
-        '<div style="font-size:17px;font-weight:600">' + x.c.toFixed(d) + '</div>' +
-        '<div style="font-size:12px;color:' + k + '">' + sg(x.ch) + x.ch.toFixed(d) + " &middot; " + sg(x.pc) + x.pc.toFixed(2) + "%</div></div>";
+      var k = cls(x.pc), d = x.p.slice(3) === "JPY" ? 3 : 4;
+      h += '<div class="tile ' + k + '">' +
+        '<div class="tp">' + esc(x.p) + "</div>" +
+        '<div class="tv">' + x.c.toFixed(d) + "</div>" +
+        '<div class="tc2">' + sg(x.ch) + x.ch.toFixed(d) + " &middot; " + sg(x.pc) + x.pc.toFixed(2) + "%</div></div>";
     });
-    h += "</div><h2>Ranked by daily change</h2>";
-    L.forEach(function (x) {
-      var k = col(x.pc), w = Math.max(2, Math.abs(x.pc) / mx * 100);
-      h += '<div style="display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px">' +
-        '<span style="width:62px">' + esc(x.p) + '</span>' +
-        '<span style="flex:1"><i style="display:block;height:10px;border-radius:5px;width:' + w.toFixed(1) + "%;background:" + k + '"></i></span>' +
-        '<span style="width:58px;text-align:right;color:' + k + '">' + sg(x.pc) + x.pc.toFixed(2) + "%</span></div>";
+    h += '</div><h2>Ranked by daily change</h2><div class="gx">';
+    L.forEach(function (x, i) {
+      var k = cls(x.pc), w = Math.max(2, Math.abs(x.pc) / mx * 100);
+      h += '<div class="brow">' +
+        '<span class="bnum">' + (i + 1) + "</span>" +
+        '<span class="blab">' + esc(x.p) + "</span>" +
+        '<span class="btrack"><i class="' + (k === "neg" ? "neg" : "pos") + '" style="left:0;width:' + w.toFixed(1) + '%"></i></span>' +
+        '<span class="bval ' + (k === "pos" ? "up" : k === "neg" ? "down" : "muted") + '">' + sg(x.pc) + x.pc.toFixed(2) + "%</span></div>";
     });
+    h += "</div>";
     h += '<p class="note">Change compares the latest close with the one before it. Currency pairs only. This is context for the scores, not a forecast.</p>';
     el.innerHTML = h;
   } catch (e) {

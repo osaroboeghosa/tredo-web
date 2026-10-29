@@ -15,15 +15,20 @@ PAGES.ecostrength = async function (el) {
       return { c: c, r: r, p: p, y: r != null && p != null ? r - p : null };
     }).sort(function (a, b) { return (b.y == null ? -99 : b.y) - (a.y == null ? -99 : a.y); });
     var f = function (v) { return v == null ? "n/a" : v.toFixed(2) + "%"; };
-    var h = '<h1>Eco Strength</h1><p class="muted sub">Policy rate, inflation and real yield for each currency, ranked by real yield.</p>';
+    var mx = Math.max.apply(null, list.map(function (x) { return Math.abs(x.y || 0); })) || 1;
+
+    var h = '<div class="pagehead"><div><div class="kicker">Real yields</div><h1>Eco Strength</h1></div><span class="asof">8 majors</span></div>';
+    h += '<p class="muted sub">Policy rate, inflation and real yield for each currency, ranked by real yield.</p>';
     h += '<div class="gx">';
     list.forEach(function (x, i) {
-      var col = x.y == null ? "inherit" : x.y > 0 ? "#34c759" : x.y < 0 ? "#e5534b" : "inherit";
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid #374151">';
-      h += '<span style="width:18px;opacity:.6">' + (i + 1) + "</span>";
-      h += '<span style="width:42px;font-weight:600">' + esc(x.c) + "</span>";
-      h += '<div style="flex:1;min-width:0;font-size:12px;opacity:.8">Rate ' + f(x.r) + "<br>CPI " + f(x.p) + "</div>";
-      h += '<span style="width:70px;text-align:right;font-weight:600;color:' + col + '">' + (x.y == null ? "n/a" : (x.y > 0 ? "+" : "") + x.y.toFixed(2) + "%") + "</span></div>";
+      var w = x.y == null ? 0 : Math.min(50, Math.abs(x.y) / mx * 50);
+      var left = x.y == null ? 50 : x.y >= 0 ? 50 : 50 - w;
+      h += '<div class="brow">' +
+        '<span class="bnum">' + (i + 1) + "</span>" +
+        '<span class="blab">' + esc(x.c) + "</span>" +
+        '<span><span class="btrack" style="display:block"><i class="' + (x.y != null && x.y < 0 ? "neg" : "pos") + '" style="left:' + left + '%;width:' + w + '%"></i></span>' +
+        '<span class="bsub" style="display:block;margin-top:4px">Rate ' + f(x.r) + " &middot; CPI " + f(x.p) + "</span></span>" +
+        '<span class="bval ' + (x.y == null ? "muted" : x.y > 0 ? "up" : x.y < 0 ? "down" : "muted") + '">' + (x.y == null ? "n/a" : (x.y > 0 ? "+" : "") + x.y.toFixed(2) + "%") + "</span></div>";
     });
     h += "</div>";
     h += '<p class="note">Real yield here is the policy rate minus the latest CPI reading. Rates are updated by hand after each central bank meeting. This is context for the scores, not a forecast.</p>';

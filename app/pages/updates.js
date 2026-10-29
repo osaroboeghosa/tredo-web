@@ -12,7 +12,7 @@ var UPR = [
 var UPM = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function upRow(x, v) {
-  var dot = "#6b7280", when = "n/a", ago = "n/a";
+  var dot = "", when = "n/a", ago = "n/a";
   if (v) {
     var dateOnly = String(v).length === 10;
     var t = Date.parse(dateOnly ? v + "T00:00:00Z" : v);
@@ -22,13 +22,12 @@ function upRow(x, v) {
     if (!dateOnly) when += ", " + ("0" + d.getUTCHours()).slice(-2) + ":" + ("0" + d.getUTCMinutes()).slice(-2) + " UTC";
     if (dateOnly) ago = Math.floor(h / 24) === 0 ? "today" : Math.floor(h / 24) + " d ago";
     else ago = h < 1 ? "under 1 h ago" : h < 48 ? Math.round(h) + " h ago" : Math.floor(h / 24) + " d ago";
-    dot = h <= x[4] ? "#34c759" : h <= 2 * x[4] ? "#ff9f0a" : "#e5534b";
+    dot = h <= x[4] ? "ok" : h <= 2 * x[4] ? "warn" : "bad";
   }
-  var s = '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid #374151">';
-  s += '<span style="width:10px;height:10px;border-radius:5px;background:' + dot + ';flex:none"></span>';
-  s += '<div style="flex:1;min-width:0"><div style="font-weight:600">' + esc(x[0]) + '</div>';
-  s += '<div style="font-size:11px;opacity:.7;margin-top:2px">' + esc(x[3]) + "</div></div>";
-  s += '<div style="text-align:right"><div style="font-weight:600">' + esc(ago) + '</div><div style="font-size:11px;opacity:.7;margin-top:2px">' + esc(when) + "</div></div></div>";
+  var s = '<div class="row2">';
+  s += '<span class="dot ' + dot + '"></span>';
+  s += '<div class="grow"><div class="r1">' + esc(x[0]) + '</div><div class="r2">' + esc(x[3]) + "</div></div>";
+  s += '<div class="rend"><div class="r1">' + esc(ago) + '</div><div class="r2">' + esc(when) + "</div></div></div>";
   return s;
 }
 
@@ -40,7 +39,8 @@ PAGES.updates = async function (el) {
         return r && r[0] ? r[0][x[2]] : null;
       }).catch(function () { return null; });
     }));
-    var h = '<h1>Data Updates Log</h1><p class="muted sub">When each dataset was last updated. Times are UTC.</p>';
+    var h = '<div class="pagehead"><div><div class="kicker">Freshness</div><h1>Data Updates Log</h1></div><span class="asof">UTC</span></div>';
+    h += '<p class="muted sub">When each dataset was last updated. Times are UTC.</p>';
     h += '<div class="gx">' + UPR.map(function (x, i) { return upRow(x, res[i]); }).join("") + "</div>";
     h += '<p class="note">Green means updated within the expected window, amber means late, red means well overdue. Weekend gaps are allowed for daily data.</p>';
     el.innerHTML = h;

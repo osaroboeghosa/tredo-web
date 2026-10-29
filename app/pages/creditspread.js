@@ -31,18 +31,18 @@ PAGES.creditspread = async function (el) {
     var Y = function (v) { return T + (H - T - B) * (b - v) / (b - a); };
     var d = p.map(function (x, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x.v).toFixed(1); }).join("");
     var t = 'fill="currentColor" opacity="0.6" font-size="10"';
-    var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto">';
-    s += '<path d="' + d + '" fill="none" stroke="#14b8a6" stroke-width="1.6"/>';
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" class="chart">';
+    s += '<path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="1.6"/>';
     s += '<text x="2" y="' + (T + 8) + '" ' + t + ">" + b.toFixed(2) + "</text>";
     s += '<text x="2" y="' + (H - B) + '" ' + t + ">" + a.toFixed(2) + "</text>";
     s += '<text x="' + L + '" y="' + (H - 4) + '" ' + t + ">" + p[0].d + "</text>";
     s += '<text x="' + (W - R) + '" y="' + (H - 4) + '" text-anchor="end" ' + t + ">" + p[p.length - 1].d + "</text></svg>";
     var h = "<h1>Credit Spreads</h1>";
     h += '<p class="muted sub">US high-yield credit spread, daily. A wider spread means more stress in credit markets.</p>';
-    h += '<div style="display:flex;gap:8px;margin:8px 0 14px">';
+    h += '<div class="fbar">';
     Object.keys(csD).forEach(function (k) {
       var on = k === csK;
-      h += '<button data-k="' + k + '" style="border:1px solid #14b8a6;background:' + (on ? "#14b8a6" : "transparent") + ";color:" + (on ? "#fff" : "#14b8a6") + ';border-radius:16px;padding:6px 14px;font-size:14px">' + k + "</button>";
+      h += '<button class="fbtn' + (on ? " on" : "") + '" data-k="' + k + '">' + k + "</button>";
     });
     h += "</div>" + s + "<h2>Summary</h2>" + gxg([
       gxr("Latest", last.d, last.v.toFixed(2), ""),
