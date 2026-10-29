@@ -116,3 +116,86 @@ h2 { font-size: 22px; letter-spacing: -.02em; margin-bottom: 16px; }
 }
 .authcard input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .aerr { display: none; color: var(--down); font-size: 13px; margin: 4px 0 10px; }
+
+/* ---------- app surface ---------- */
+.pagehead { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.pagehead h1 { margin: 0; }
+.asof {
+  font-size: 12px; color: var(--muted); background: var(--card); border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 12px; white-space: nowrap;
+}
+.statsrow {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0;
+}
+.stat {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 2px;
+}
+.stat span { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.stat b { font-size: 22px; letter-spacing: -.02em; }
+
+/* clearest-bias hero card */
+.hero-bias {
+  display: block; color: var(--text); border-radius: 20px; padding: 18px;
+  background: linear-gradient(160deg, var(--bg2), var(--bg0));
+  border: 1px solid var(--accent-glow); box-shadow: var(--shadow-sm);
+  margin-bottom: 16px; transition: transform .18s ease, box-shadow .18s ease;
+}
+.hero-bias:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.hb-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.hb-top .kicker { margin: 0; }
+.conv { font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+.conv-hi { color: var(--up); background: var(--ok-soft); }
+.conv-md { color: var(--warn); background: rgba(251,191,36,.12); }
+.hb-main { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.hb-pair { font-size: 30px; font-weight: 800; letter-spacing: -.03em; }
+.hb-lab { font-size: 13.5px; font-weight: 600; }
+.hb-score { font-size: 38px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.hb-bars { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.hbb { display: grid; grid-template-columns: 88px 1fr 44px; align-items: center; gap: 10px; font-size: 12px; }
+.hbb .hl { color: var(--muted); }
+.hbb .htr { position: relative; height: 6px; border-radius: 999px; background: var(--card); overflow: hidden; }
+.hbb .htr i { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
+.hbb .htr i.pos { background: var(--up); } .hbb .htr i.neg { background: var(--down); }
+.hbb b { text-align: right; font-size: 13px; }
+.hb-foot { font-size: 12px; margin-top: 14px; }
+
+/* score rows */
+.sl { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
+.sr { transition: background .15s ease; }
+.sr:hover { background: var(--accent-soft); }
+.tcs span { min-width: 34px; }
+.tcs b { font-variant-numeric: tabular-nums; }
+
+/* settings groups */
+.gx { border: 1px solid var(--line); }
+.gr { min-height: 52px; }
+.gv { font-variant-numeric: tabular-nums; }
+.msw { background: rgba(147,161,189,.35); }
+.msw.on { background: var(--accent); }
+.msw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* filters */
+.fbar { margin: 16px 0 10px; }
+.fbtn { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.fbtn:hover { border-color: var(--accent); color: var(--text); }
+.fbtn.on { color: #04121a; border-color: transparent; background: var(--grad); }
+.fq { border-radius: 14px; padding: 12px 14px; }
+.fq:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* notes */
+.note { font-size: 12px; color: var(--muted); line-height: 1.55; margin-top: 14px; opacity: .85; }
+
+/* tables */
+.tw { margin: 0 -2px; border-radius: 14px; }
+.ht th { padding: 8px 3px; }
+.ht th:first-child, .ht td.pr { background: var(--bg2); }
+.ht tbody tr:hover td { filter: brightness(1.12); }
+.ht td { transition: filter .12s ease; }
+
+@media (max-width: 560px) {
+  .statsrow { grid-template-columns: repeat(2, 1fr); }
+  .hb-pair { font-size: 24px; }
+  .hb-score { font-size: 30px; }
+  .hbb { grid-template-columns: 74px 1fr 38px; }
+}

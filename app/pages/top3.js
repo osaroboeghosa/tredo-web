@@ -30,38 +30,3 @@ function t3tab(f) {
   });
   return h + "</tr></thead><tbody>" + f.map(t3row).join("") + "</tbody></table></div>";
 }
-
-PAGES.home = async function (el) {
-  el.innerHTML = '<p class="muted">Loading...</p>';
-  try {
-    var d = await sb("scores_v3?select=as_of&order=as_of.desc&limit=1");
-    if (!d.length) { el.innerHTML = '<h1>Top Setups</h1><p class="muted">No scores yet.</p>'; return; }
-    var day = d[0].as_of;
-    var cols = "pair,total,bias," + T3S.map(function (n) { return n[0]; }).join(",");
-    var rows = await sb("scores_v3?select=" + cols + "&as_of=eq." + day + "&limit=100");
-    var h = '<h1>Top Setups</h1><p class="muted sub">Every signal behind every score. As of ' + esc(day) + ". Tap a heading to sort, tap a pair to open it.</p>" + filtBar();
-    h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div></div><div id="res"></div>';
-    h += '<p class="note">Each signal runs from -2 (red) to +2 (green). The score is the plain sum of all signals. Blank means no data for that pair. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
-    el.innerHTML = h;
-    var res = el.querySelector("#res");
-    var draw = function () {
-      var f = rows.filter(function (x) { return filtMatch(x.pair) && (!t3h || x.bias !== "Neutral"); });
-      f.sort(function (a, b) { return (t3v(b, t3k) - t3v(a, t3k)) * (t3d < 0 ? 1 : -1); });
-      res.innerHTML = f.length ? t3tab(f) : filtEmpty();
-    };
-    res.addEventListener("click", function (e) {
-      var t = e.target.closest(".t2h");
-      if (!t) return;
-      var k = t.getAttribute("data-k");
-      if (k === t3k) t3d = -t3d; else { t3k = k; t3d = -1; }
-      draw();
-    });
-    filtWire(el, draw);
-    var b = el.querySelector("#hn");
-    b.className = "msw" + (t3h ? " on" : "");
-    b.onclick = function () { t3h = !t3h; b.className = "msw" + (t3h ? " on" : ""); draw(); };
-    draw();
-  } catch (e) {
-    el.innerHTML = '<p class="down">Could not load scores: ' + esc(e.message) + "</p>";
-  }
-};
