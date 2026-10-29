@@ -1,0 +1,118 @@
+/* tredo design layer: shell, buttons, landing page. Loaded after app.css so it can override. */
+
+/* ---------- shared bits ---------- */
+main.wrap, main { max-width: 1080px; }
+.kicker {
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+h1 { font-size: 26px; letter-spacing: -.02em; }
+h2 { font-size: 22px; letter-spacing: -.02em; margin-bottom: 16px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+  color: var(--text); font-size: 14px; font-weight: 600; padding: 10px 18px; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.primary {
+  background: var(--grad); color: #04121a; border: none;
+  box-shadow: 0 6px 24px var(--accent-glow);
+}
+.btn.primary:hover { box-shadow: 0 8px 30px var(--accent-glow); }
+.btn.ghost { background: transparent; color: var(--text); border-color: var(--line); }
+.btn.ghost:hover { background: var(--card); }
+.btn.sm { padding: 6px 14px; font-size: 13px; }
+.btn.lg { padding: 13px 26px; font-size: 15px; }
+.userchip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%; background: var(--grad);
+  color: #04121a; font-weight: 800; font-size: 14px;
+}
+
+/* ---------- top shell ---------- */
+#top {
+  display: flex; justify-content: center; padding: 10px 16px;
+  position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line); z-index: 20;
+}
+.topbar {
+  width: 100%; max-width: 1080px; display: flex; align-items: center; gap: 16px;
+}
+.brand { font-weight: 800; font-size: 20px; letter-spacing: -.02em; color: var(--text); }
+.brand b { color: var(--accent); }
+.brand.sm { font-size: 14px; }
+.dnav { display: flex; gap: 2px; margin-left: 8px; background: var(--card); border-radius: 999px; padding: 4px; }
+.dnav a { color: var(--muted); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px; }
+.dnav a.on { color: var(--text); background: var(--accent-soft); }
+.ta { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+#theme { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; font-size: 13px; cursor: pointer; }
+
+/* mobile: keep bottom tabs, hide desktop nav */
+@media (max-width: 840px) { .dnav { display: none; } }
+@media (min-width: 841px) { #tabs { display: none; } body { padding-bottom: 20px; } }
+
+/* ---------- landing ---------- */
+.hero { text-align: center; padding: 64px 12px 28px; }
+.hero h1 { font-size: clamp(30px, 6vw, 52px); line-height: 1.08; margin: 6px auto 16px; max-width: 760px; }
+.ct { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: clamp(15px, 2.2vw, 18px); color: var(--muted); max-width: 640px; margin: 0 auto 24px; line-height: 1.55; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.cta-row.center { margin-top: 18px; }
+.stats { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; margin-top: 26px; color: var(--muted); font-size: 13px; }
+.stats b { color: var(--text); }
+
+.prev { display: flex; justify-content: center; padding: 26px 12px 8px; }
+.pcard {
+  width: 100%; max-width: 520px; border-radius: 20px; padding: 18px;
+  background: var(--bg2); border: 1px solid var(--line); box-shadow: var(--shadow);
+}
+.phead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.pbody { display: flex; flex-direction: column; gap: 8px; }
+.prow {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px;
+  background: var(--card); border: 1px solid var(--line);
+}
+.ppair { font-size: 14px; letter-spacing: .02em; }
+.pbias { flex: 1; text-align: right; font-size: 12px; }
+.pbias.bpos { color: var(--up); } .pbias.bneg { color: var(--down); }
+.lchip {
+  min-width: 44px; text-align: center; font-size: 13px; font-weight: 700;
+  padding: 4px 8px; border-radius: 8px;
+}
+.lchip.pos { color: var(--up); background: var(--ok-soft); }
+.lchip.neg { color: var(--down); background: var(--no-soft); }
+.lchip.neu { color: var(--muted); background: var(--card); }
+.pfoot { font-size: 12px; margin-top: 12px; text-align: center; }
+
+.sect { max-width: 900px; margin: 0 auto; padding: 44px 16px 6px; text-align: center; }
+.pillars {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px; text-align: left; margin-top: 4px;
+}
+.pillars > div {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 18px; transition: border-color .2s ease, transform .2s ease;
+}
+.pillars > div:hover { border-color: var(--accent-glow); transform: translateY(-2px); }
+.pillars h3 { font-size: 15px; margin-bottom: 8px; }
+.pillars p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+.faq { max-width: 720px; margin: 0 auto; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.faq details {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px;
+}
+.faq summary { font-weight: 600; cursor: pointer; font-size: 14.5px; }
+.faq p { color: var(--muted); font-size: 13.5px; margin-top: 10px; line-height: 1.55; }
+.ctafinal { padding-bottom: 64px; }
+
+/* ---------- auth ---------- */
+.authcard { max-width: 420px; margin: 40px auto; }
+.authcard label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 14px; text-align: left; }
+.authcard input {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  color: var(--text); padding: 11px 14px; font-size: 14px; outline: none;
+}
+.authcard input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.aerr { display: none; color: var(--down); font-size: 13px; margin: 4px 0 10px; }

@@ -4,6 +4,15 @@
   --accent: #2dd4bf; --up: #34d399; --down: #f87171; --warn: #fbbf24;
   --r: 16px; --gap: 12px;
   --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* design layer */
+  --bg0: #060b16;
+  --accent-soft: rgba(45,212,191,.14);
+  --accent-glow: rgba(45,212,191,.35);
+  --grad: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+  --ok-soft: rgba(52,211,153,.15);
+  --no-soft: rgba(248,113,113,.15);
+  --shadow: 0 12px 40px rgba(0,0,0,.45);
+  --shadow-sm: 0 4px 16px rgba(0,0,0,.3);
 }
 :root[data-theme="light"] {
   --bg: #f4f7fb; --bg2: #ffffff; --card: rgba(255,255,255,.85);
