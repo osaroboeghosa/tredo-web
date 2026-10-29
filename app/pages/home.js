@@ -81,6 +81,12 @@ PAGES.home = async function (el) {
         "</a>";
     }
 
+    h += '<div class="quicklinks">' +
+      '<a href="#/alerts">Confluence alerts</a>' +
+      '<a href="#/strength">Currency strength</a>' +
+      '<a href="#/corr">Correlations</a>' +
+      '<a href="#/calendar">Calendar</a></div>';
+
     h += filtBar();
     h += '<div class="gx"><div class="gr"><span class="gl">Hide Neutral</span><button class="msw" id="hn" aria-label="Hide Neutral"><i></i></button></div></div><div id="res"></div>';
     h += '<p class="note">Each signal runs from -2 (red) to +2 (green). The score is the plain sum of all signals. Blank means no data for that pair. Accuracy is not proven. Scores rank where to look first. They are not forecasts.</p>';
