@@ -1,8 +1,0 @@
-.rt{display:block;margin-bottom:10px}
-.rtr{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.rtp{font-size:17px;font-weight:700}
-.rtbar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:8px 0;background:var(--line)}
-.rtbar i{display:block;height:100%}
-.rtl{background:var(--up)}
-.rts{background:var(--down)}
-.rtn{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}

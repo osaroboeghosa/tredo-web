@@ -19,9 +19,9 @@ PAGES.yieldcurve = async function (el) {
     var z = Y(0);
     var s = '<svg viewBox="0 0 ' + W + " " + H + '" class="chart">';
     s += '<defs><clipPath id="yca"><rect x="0" y="0" width="' + W + '" height="' + z + '"/></clipPath><clipPath id="ycb"><rect x="0" y="' + z + '" width="' + W + '" height="' + H + '"/></clipPath></defs>';
-    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + z + '" y2="' + z + '" stroke="#FF453A" stroke-dasharray="4 3"/>';
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + z + '" y2="' + z + '" stroke="var(--down)" stroke-dasharray="4 3"/>';
     s += '<path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="1.6" clip-path="url(#yca)"/>';
-    s += '<path d="' + d + '" fill="none" stroke="#FF453A" stroke-width="1.6" clip-path="url(#ycb)"/>';
+    s += '<path d="' + d + '" fill="none" stroke="var(--down)" stroke-width="1.6" clip-path="url(#ycb)"/>';
     var t = 'fill="currentColor" opacity="0.6" font-size="10"';
     s += '<text x="2" y="' + (T + 8) + '" ' + t + ">" + hi.toFixed(1) + "</text>";
     s += '<text x="2" y="' + (z - 3) + '" ' + t + ">0</text>";

@@ -1,9 +1,0 @@
-@media (min-width:900px){
-body{padding-left:0;padding-bottom:96px}
-#top{display:flex}
-#tabs{left:0;right:0;top:auto;bottom:0;width:auto;flex-direction:row;justify-content:normal;align-items:normal;gap:0;padding:0 0 env(safe-area-inset-bottom,0px);border-right:0;border-top:.5px solid var(--line)}
-#tabs::before{content:none;display:none}
-#tabs a{flex:1;display:block;padding:8px 4px 6px;font-size:10px;text-align:center;border-radius:0}
-#tabs a::before{margin:0 auto 3px;width:26px;height:26px}
-#tabs a.on{background:none}
-}

@@ -1,38 +1,38 @@
 var mrItems = [
-  ["weekly", "Weekly report", "Score changes, currency strength and upcoming events", "#0A84FF", "M4 7h16v13H4zM4 11h16M8 4v4M16 4v4", 0],
-  ["calendar", "Calendar", "Releases by day with forecast, previous and actual", "#FF6B35", "M5 5h14v15H5zM5 10h14M9 14h2", 0],
-  ["sentiment", "Sentiment", "Where retail traders are positioned, read as a contrarian signal", "#FF9F0A", "M12 21a9 9 0 100-18 9 9 0 000 18zM8 14c1 2 7 2 8 0", 0],
-  ["macro", "Macro", "Growth, retail sales, inflation and jobs for each currency", "#5E5CE6", "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3 3 15 0 18", 0],
-  ["heatmap", "Heatmap", "Economic readings of all 8 currencies side by side", "#FF9500", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z", 0],
-  ["groups", "Groups", "One heatmap each for growth, inflation, jobs, positioning and crowd", "#00C7BE", "M4 5h16v4H4zM4 11h16v4H4zM4 17h16v3H4z", 0],
-  ["technical", "Technical", "Trend, moving averages and volatility", "#FFD60A", "M4 16l4-4 3 3 5-6M4 20h16", 0],
-  ["usecon", "US economy", "Latest US releases against forecast", "#FF375F", "M5 20v-9M12 20V5M19 20v-7", 0],
-  ["assets", "Asset Scorecard", "Macro readings for indices, oil, gold and silver", "#34C759", "M4 20V10M10 20V4M16 20v-8M22 20H2", 0],
-  ["yieldcurve", "Yield curve", "US long-term minus short-term yield, red when inverted", "#32ADE6", "M4 17c4-8 8-8 16-10M4 20h16", 0],
-  ["carry", "Carry Trade Scanner", "Pairs ranked by policy rate difference", "#AF52DE", "M4 8h13l-3-3M20 16H7l3 3", 0],
-  ["surprise", "Eco Surprise Index", "Share of Bullish readings per currency, ranked", "#FF2D55", "M5 20V9M12 20V4M19 20v-7", 0],
-  ["updates", "Data Updates Log", "When each dataset was last updated", "#8E8E93", "M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2", 0],
-  ["ecostrength", "Eco Strength", "Policy rate, CPI and real yield, ranked", "#5AC8FA", "M4 20V8M10 20V4M16 20v-9M22 20H2", 0],
-  ["marketmap", "Market Heatmap", "1 day change of each currency pair, ranked", "#FF6482", "M4 20V14M9 20V8M14 20V11M19 20V5", 0],
-  ["creditspread", "Credit Spreads", "US high-yield credit spread with 1 day, 1 week and 1 month change", "#E8A33D", "M4 19h16M6 16l4-5 3 3 5-7", 0],
-  ["realyield", "Real Yield History", "2 year yield minus inflation for USD, EUR and CAD", "#3DBE8B", "M4 12h16M4 18c4-10 8-2 16-12", 0],
-  ["econheat/USD", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/GBP", "UK Economic Heatmap", "Latest UK releases with sterling and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/JPY", "JP Economic Heatmap", "Latest Japan releases with yen and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/CAD", "CA Economic Heatmap", "Latest Canada releases with CAD and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/AUD", "AU Economic Heatmap", "Latest Australia releases with AUD and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/NZD", "NZ Economic Heatmap", "Latest New Zealand releases with NZD and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/CHF", "CH Economic Heatmap", "Latest Switzerland releases with franc and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["econheat/CNY", "CN Economic Heatmap", "Latest China releases with yuan and stock impact", "#2f5bea", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
-  ["seasonality", "Seasonality", "Average return of each calendar month", "#30D158", "M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 100 8 4 4 0 000-8z", 0],
-  ["performance", "Performance", "Stored scores compared with what price did next", "#BF5AF2", "M4 18l5-6 4 3 7-9", 2],
-  ["weights", "Weights", "Try your own signal weights on this phone", "#64D2FF", "M4 7h16M4 12h16M4 17h16M9 5v4M15 10v4M8 15v4", 2],
-  ["accuracy", "How accurate is this?", "What the scores are and are not", "#FF453A", "M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v5M12 16v.5", 2],
-  ["tools", "Tools", "Lot size calculator", "#8E8E93", "M5 4h14v16H5zM8 8h8M8 12h2M12 12h2M8 16h2M12 16h4", 2],
-  ["alerts", "Confluence Alerts", "Where technical, sentiment and macro agree", "#2dd4bf", "M12 3v18M3 12h18", 1],
-  ["strength", "Currency Strength", "All 8 majors ranked by score contribution", "#7C9EFF", "M4 20V10M10 20V4M16 20v-7M22 20H2", 1],
-  ["corr", "Correlations", "Which pairs move together right now", "#F0A8D0", "M4 4h6v6H4zM14 14h6v6h-6zM10 7h7", 1],
+  ["weekly", "Weekly report", "Score changes, currency strength and upcoming events", "M4 7h16v13H4zM4 11h16M8 4v4M16 4v4", 0],
+  ["calendar", "Calendar", "Releases by day with forecast, previous and actual", "M5 5h14v15H5zM5 10h14M9 14h2", 0],
+  ["sentiment", "Sentiment", "Where retail traders are positioned, read as a contrarian signal", "M12 21a9 9 0 100-18 9 9 0 000 18zM8 14c1 2 7 2 8 0", 0],
+  ["macro", "Macro", "Growth, retail sales, inflation and jobs for each currency", "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3 3 15 0 18", 0],
+  ["heatmap", "Heatmap", "Economic readings of all 8 currencies side by side", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z", 0],
+  ["groups", "Groups", "One heatmap each for growth, inflation, jobs, positioning and crowd", "M4 5h16v4H4zM4 11h16v4H4zM4 17h16v3H4z", 0],
+  ["technical", "Technical", "Trend, moving averages and volatility", "M4 16l4-4 3 3 5-6M4 20h16", 0],
+  ["usecon", "US economy", "Latest US releases against forecast", "M5 20v-9M12 20V5M19 20v-7", 0],
+  ["assets", "Asset Scorecard", "Macro readings for indices, oil, gold and silver", "M4 20V10M10 20V4M16 20v-8M22 20H2", 0],
+  ["yieldcurve", "Yield curve", "US long-term minus short-term yield, red when inverted", "M4 17c4-8 8-8 16-10M4 20h16", 0],
+  ["carry", "Carry Trade Scanner", "Pairs ranked by policy rate difference", "M4 8h13l-3-3M20 16H7l3 3", 0],
+  ["surprise", "Eco Surprise Index", "Share of Bullish readings per currency, ranked", "M5 20V9M12 20V4M19 20v-7", 0],
+  ["updates", "Data Updates Log", "When each dataset was last updated", "M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2", 0],
+  ["ecostrength", "Eco Strength", "Policy rate, CPI and real yield, ranked", "M4 20V8M10 20V4M16 20v-9M22 20H2", 0],
+  ["marketmap", "Market Heatmap", "1 day change of each currency pair, ranked", "M4 20V14M9 20V8M14 20V11M19 20V5", 0],
+  ["creditspread", "Credit Spreads", "US high-yield credit spread with 1 day, 1 week and 1 month change", "M4 19h16M6 16l4-5 3 3 5-7", 0],
+  ["realyield", "Real Yield History", "2 year yield minus inflation for USD, EUR and CAD", "M4 12h16M4 18c4-10 8-2 16-12", 0],
+  ["econheat/USD", "US Economic Heatmap", "Latest US releases with dollar and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/EUR", "EU Economic Heatmap", "Latest euro area releases with euro and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/GBP", "UK Economic Heatmap", "Latest UK releases with sterling and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/JPY", "JP Economic Heatmap", "Latest Japan releases with yen and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/CAD", "CA Economic Heatmap", "Latest Canada releases with CAD and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/AUD", "AU Economic Heatmap", "Latest Australia releases with AUD and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/NZD", "NZ Economic Heatmap", "Latest New Zealand releases with NZD and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/CHF", "CH Economic Heatmap", "Latest Switzerland releases with franc and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["econheat/CNY", "CN Economic Heatmap", "Latest China releases with yuan and stock impact", "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z", 0],
+  ["seasonality", "Seasonality", "Average return of each calendar month", "M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 100 8 4 4 0 000-8z", 0],
+  ["performance", "Performance", "Stored scores compared with what price did next", "M4 18l5-6 4 3 7-9", 2],
+  ["weights", "Weights", "Try your own signal weights on this phone", "M4 7h16M4 12h16M4 17h16M9 5v4M15 10v4M8 15v4", 2],
+  ["accuracy", "How accurate is this?", "What the scores are and are not", "M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v5M12 16v.5", 2],
+  ["tools", "Tools", "Lot size calculator", "M5 4h14v16H5zM8 8h8M8 12h2M12 12h2M8 16h2M12 16h4", 2],
+  ["alerts", "Confluence Alerts", "Where technical, sentiment and macro agree", "M12 3v18M3 12h18", 1],
+  ["strength", "Currency Strength", "All 8 majors ranked by score contribution", "M4 20V10M10 20V4M16 20v-7M22 20H2", 1],
+  ["corr", "Correlations", "Which pairs move together right now", "M4 4h6v6H4zM14 14h6v6h-6zM10 7h7", 1],
 ];
 
 function mrDark() {
@@ -42,7 +42,7 @@ function mrDark() {
 }
 
 function mrRow(x) {
-  return '<a class="mrw" href="#/' + x[0] + '"><span class="mic" style="background:' + x[3] + '"><svg viewBox="0 0 24 24"><path d="' + x[4] + '"/></svg></span>' +
+  return '<a class="mrw" href="#/' + x[0] + '"><span class="mic g' + x[4] + '"><svg viewBox="0 0 24 24"><path d="' + x[3] + '"/></svg></span>' +
     '<span class="mtx">' + esc(x[1]) + '<small>' + esc(x[2]) + '</small></span><span class="mch">&rsaquo;</span></a>';
 }
 
@@ -50,7 +50,7 @@ PAGES.more = async function (el) {
   var g = ["Reports", "Signals", "Tools and info"];
   var h = "<h1>More</h1>";
   g.forEach(function (t, i) {
-    h += "<h2>" + t + '</h2><div class="mgx">' + mrItems.filter(function (x) { return x[5] === i; }).map(mrRow).join("") + "</div>";
+    h += "<h2>" + t + '</h2><div class="mgx">' + mrItems.filter(function (x) { return x[4] === i; }).map(mrRow).join("") + "</div>";
   });
   h += '<h2>Appearance</h2><div class="mgx"><div class="mrw"><span class="mtx">Dark mode</span><button class="msw' + (mrDark() ? " on" : "") + '" id="mrsw" aria-label="Dark mode"><i></i></button></div></div>';
   el.innerHTML = h;

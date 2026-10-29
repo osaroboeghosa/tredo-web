@@ -1,6 +1,6 @@
 var ryD = { "1Y": 365, "3Y": 1095 };
 var ryK = "3Y";
-var ryC = [["USD", "US_YIELD_2Y", "USD_CPI", "level", "#14b8a6"], ["EUR", "EUR_Y2", "EUR_CPI", "rate", "#2f5bea"], ["CAD", "CAD_Y2", "CAD_CPI", "level", "#f59e0b"]];
+var ryC = [["USD", "US_YIELD_2Y", "USD_CPI", "level", "var(--s1)"], ["EUR", "EUR_Y2", "EUR_CPI", "rate", "var(--s2)"], ["CAD", "CAD_Y2", "CAD_CPI", "level", "var(--s3)"]];
 function ryQ(s, k) {
   return sb("raw_values?select=obs_date,value&series=eq." + s + "&key=eq." + k + "&order=obs_date.desc&limit=1000");
 }
@@ -47,7 +47,7 @@ PAGES.realyield = async function (el) {
       var Y = function (v) { return T + (H - T - B) * (hi - v) / (hi - lo); };
       var t = 'fill="currentColor" opacity="0.6" font-size="10"';
       var s = '<svg viewBox="0 0 ' + W + " " + H + '" class="chart">';
-      s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="#8e8e93" stroke-dasharray="4 3"/>';
+      s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="var(--line)" stroke-dasharray="4 3"/>';
       S.forEach(function (q) {
         if (q.pts.length < 2) return;
         var d = q.pts.map(function (x, i) { return (i ? "L" : "M") + X(x.m).toFixed(1) + " " + Y(x.r).toFixed(1); }).join("");

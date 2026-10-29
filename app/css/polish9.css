@@ -1,8 +1,0 @@
-.gx{background:var(--card);border-radius:12px;overflow:hidden}
-.gr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;min-height:48px;position:relative;font-size:17px}
-.gr+.gr:before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--line)}
-.gl{flex:1;min-width:0;line-height:1.3}
-.gs{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
-.gv{flex:none;font-weight:600;text-align:right}
-.gp{padding:14px 16px}
-.gr .tlf{background:transparent;border:0;border-radius:0;color:var(--text);text-align:right;text-align-last:right;font-size:17px;width:55%;padding:0;margin:0;outline:0}

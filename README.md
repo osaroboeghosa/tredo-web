@@ -46,17 +46,14 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 - app/pages/marketmap.js: Market Heatmap, 1 day change of each of the 28 currency pairs as tiles and ranked bars (reads prices).
 - app/pages/creditspread.js: Credit Spreads, US high-yield spread with 1 day, 1 week and 1 month change, range stats and a 6M/1Y/3Y line chart (reads raw_values, series US_HY_SPREAD).
 - app/pages/realyield.js: Real Yield History, 2 year yield minus yearly CPI for USD, EUR and CAD, monthly lines with a 1Y/3Y toggle (reads raw_values, 2Y yield and CPI series).
-- app/css/tokens.css: colour, font, radius, gradient and shadow tokens (dark default, light mode, teal accent).
-- app/css/design.css: shell, buttons, landing page, alerts, strength and correlation styles, plus shared data utilities (dtable, chip, gauge, brow, tile, dot, row2, legend) used across the data pages. Loaded after app.css.
-- app/css/app.css: shared layout, tab bar, cards.
-- app/css/scores.css, pair.css, filter.css, flow.css, sent.css, macro.css, banks.css, season.css, tools.css, econ.css, groups.css, techmap.css: styles for the page of the same name.
-- app/css/polish.css to polish16.css: later style fixes, loaded in numeric order.
+- app/css/tokens.css: colour, font, radius, gradient and shadow tokens, plus base resets. Dark is the default, light mode is a token swap on data-theme or prefers-color-scheme. The palette is declared only here.
+- app/css/site.css: every other style, merged from the old split files in their original cascade order. Sections: base shell, design layer, per-page styles, legacy polish rules, shared data utilities (dtable, chip, gauge, brow, tile, dot, row2, legend), charts. The legacy palette, headings and shell overrides that used to fight tokens.css were removed.
 
 ## Older files at repo root
 Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
-- Web is now at ?v=95.
+- Web is now at ?v=100.
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.

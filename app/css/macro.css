@@ -1,6 +1,0 @@
-.mcard { padding: 14px; }
-.mh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.mcur { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
-.mrow { padding: 8px 0; border-top: 1px solid var(--line); }
-.mt { display: flex; justify-content: space-between; gap: 8px; }
-.ms { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
