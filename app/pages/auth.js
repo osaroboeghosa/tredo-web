@@ -18,6 +18,14 @@ function authFormHTML() {
 PAGES.auth = function (el) {
   var f = authFormHTML();
   el.innerHTML =
+    '<div class="authwrap">' +
+    '<aside class="authside">' +
+      '<span class="kicker">Workspace access</span>' +
+      "<h2>The macro picture, already scored.</h2>" +
+      "<p>Signing in is optional. The workspace opens without an account; an account only keeps your preferences and alerts attached to you.</p>" +
+      "<ul><li>Saved filters and layout</li><li>Confluence alerts by pair</li><li>Same data, on every device</li></ul>" +
+      '<a class="btn ghost sm" href="#/start" style="align-self:flex-start;margin-top:8px">Back to landing</a>' +
+    "</aside>" +
     '<div class="card authcard">' +
       '<div class="kicker">Account</div>' +
       "<h1>" + esc(f.title) + "</h1>" +
@@ -35,7 +43,7 @@ PAGES.auth = function (el) {
           "</div>" +
           "</form>" +
           "<p class='muted'><a href='#' id='aswap'>" + esc(f.swap) + "</a></p>") +
-    "</div>";
+    "</div></div>";
 
   var out = document.getElementById("aout");
   if (out) out.onclick = authSignOut;

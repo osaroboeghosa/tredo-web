@@ -29,12 +29,16 @@ function authSignOut() {
   sbAuth.auth.signOut();
 }
 
+var authBound = false;
+
 function authInit() {
   if (!sbAuth) return;
   sbAuth.auth.getSession().then(function (r) {
     tredoUser = (r && r.data && r.data.user) || null;
     renderAuthbox();
   });
+  if (authBound) return;
+  authBound = true;
   sbAuth.auth.onAuthStateChange(function (ev, session) {
     tredoUser = (session && session.user) || null;
     renderAuthbox();

@@ -7,8 +7,8 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 - app/settings.js: shared settings.
 - app/core/api.js: sb() Supabase read helper and esc() text escaper.
 - app/core/auth.js: optional Supabase sign in. The app stays open without an account; signing in only enables saved preferences and alerts.
-- app/core/shell.js: router, header, bottom tabs (home, scores, flow, banks, more), footer disclaimer, "This page is being rebuilt." fallback.
-- app/pages/landing.js: About page at #/start, marketing front with a live score preview, pillars, FAQ.
+- app/core/shell.js: router and page shell. No hash opens the landing page; #/start is the landing, everything else is the workspace. Desktop (980px and up) gets a fixed sidebar, breadcrumb top bar and wide content column; phones get a compact top bar and five bottom tabs. Also owns the live-score badge, loading skeletons and the per-route entrance animation.
+- app/pages/landing.js: the entry page. Longer marketing layout with a live score preview, feature grid, three-step explainer, FAQ and two entry buttons (Get started goes to #/home, Sign in goes to #/auth).
 - app/pages/auth.js: sign in, create account and magic link at #/auth.
 - app/pages/alerts.js: Confluence Alerts, instruments where technical, sentiment and macro agree.
 - app/pages/strength.js: Currency Strength, all 8 majors scored from every pair score that contains them, plus divergences.
@@ -53,7 +53,7 @@ Public website for tredo, a macro bias tool for forex. Static HTML, CSS and JS o
 Left from the first version (index.html, scores.html, pair.html, central-banks.html, sentiment.html, cot.html, seasonality.html, whats-new.html, upgrade.html, tools.html, css/, js/). Delete this line once they are removed.
 
 ## Notes
-- Web is now at ?v=100.
+- Web is now at ?v=102.
 - Only public keys (Supabase URL and publishable key) are used here.
 - The site never shows data source names or backtest numbers.
 - Scores help prioritise attention. They are not trade entries or financial advice.

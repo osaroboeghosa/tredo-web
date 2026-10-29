@@ -8,6 +8,12 @@
   --seg: #16233b;
   /* design layer */
   --bg0: #060b16;
+  --neutral-50: #0a0e17;
+  --neutral-100: #141c2e;
+  --neutral-200: #1e2840;
+  --neutral-500: #4a5f7a;
+  --neutral-600: #6b80a1;
+  --neutral-700: #8c9eb9;
   --accent-soft: rgba(45,212,191,.14);
   --accent-glow: rgba(45,212,191,.35);
   --grad: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
@@ -24,6 +30,12 @@
   --s1: #0f766e; --s2: #1d4ed8; --s3: #b45309;
   --seg: #e6ecf5;
   --bg0: #e9eff8;
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-500: #64748b;
+  --neutral-600: #94a3b8;
+  --neutral-700: #cbd5e1;
   --accent-soft: rgba(15,118,110,.10);
   --accent-glow: rgba(15,118,110,.22);
   --grad-text: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
@@ -38,6 +50,12 @@
     --s1: #0f766e; --s2: #1d4ed8; --s3: #b45309;
     --seg: #e6ecf5;
     --bg0: #e9eff8;
+    --neutral-50: #f8fafc;
+    --neutral-100: #f1f5f9;
+    --neutral-200: #e2e8f0;
+    --neutral-500: #64748b;
+    --neutral-600: #94a3b8;
+    --neutral-700: #cbd5e1;
     --accent-soft: rgba(15,118,110,.10);
     --accent-glow: rgba(15,118,110,.22);
     --grad-text: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
